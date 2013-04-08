@@ -1,4 +1,4 @@
-Source: yubiauth
+Source: python-yubiauth
 Maintainer: Yubico Open Source Maintainers <ossmaint@yubico.com>
 Uploaders: Simon Josefsson <simon@yubico.com>, Klas Lindfors <klas@yubico.com>, Dain Nilsson <dain@yubico.com>
 Section: python
