@@ -1,0 +1,213 @@
+2013-04-08  Dain Nilsson <dain@yubico.com>
+
+	* NEWS: Updated NEWS for 0.1
+
+2013-04-08  Dain Nilsson <dain@yubico.com>
+
+	* .gitignore, MANIFEST.in, maintainer-scripts/make-release.sh: Added
+	make-release.sh script.
+
+2013-04-08  Dain Nilsson <dain@yubico.com>
+
+	* setup.py: Lower-case package name.
+
+2013-04-08  Dain Nilsson <dain@yubico.com>
+
+	* setup.py: Added classifiers.
+
+2013-04-08  Dain Nilsson <dain@yubico.com>
+
+	* yubiauth/yhsm.py: Added key handle deprecation.
+
+2013-04-05  Dain Nilsson <dain@yubico.com>
+
+	* .gitignore, MANIFEST.in, NEWS, setup.py, test/test_rest_api.py,
+	test/test_users.py, test/test_yhsm.py, test/test_yubikeys.py,
+	tests/test_rest_api.py, tests/test_users.py, tests/test_yhsm.py,
+	tests/test_yubikeys.py: Improved building.
+
+2013-04-05  Dain Nilsson <dain@yubico.com>
+
+	* setup.cfg, setup.py, tests/test_yhsm.py, yubiauth/config.py,
+	yubiauth/default_settings.py, yubiauth/yhsm.py: Simplified device
+	selection of yhsm.
+
+2013-04-04  Dain Nilsson <dain@yubico.com>
+
+	* .gitmodules, doc, tests/test_rest_api.py, yubiauth/rest_api.py: 
+	Added documentation.  Improved validate API (REST).
+
+2013-04-04  Dain Nilsson <dain@yubico.com>
+
+	* setup.py, yubiauth/config.py, yubiauth/model.py: Fix test running
+	through ./setup.py test
+
+2013-04-04  Dain Nilsson <dain@yubico.com>
+
+	* yubiauth/config.py, yubiauth/default_settings.py: Missed one file
+	in last commit.
+
+2013-04-04  Dain Nilsson <dain@yubico.com>
+
+	* yubiauth/config.py, yubiauth/model.py: Read config from
+	/etc/yubico/yubiauth/yubiauth
+
+2013-04-04  Dain Nilsson <dain@yubico.com>
+
+	* setup.py: More info to setup.py
+
+2013-04-03  Dain Nilsson <dain@yubico.com>
+
+	* tests/test_rest_api.py, yubiauth/rest_api.py: Added filtering to
+	REST API.
+
+2013-04-03  Dain Nilsson <dain@yubico.com>
+
+	* tests/test_rest_api.py, yubiauth/rest_api.py,
+	yubiauth/yubi_auth.py: Support HTTP DELETE.  Better tests.
+
+2013-04-03  Dain Nilsson <dain@yubico.com>
+
+	* tests/test_rest_api.py, yubiauth/rest_api.py: More tests
+
+2013-04-03  Dain Nilsson <dain@yubico.com>
+
+	* tests/test_rest_api.py, yubiauth/model.py, yubiauth/rest_api.py: 
+	Added YubiKey attributes to REST API.
+
+2013-04-03  Dain Nilsson <dain@yubico.com>
+
+	* tests/test_rest_api.py: More tests
+
+2013-04-03  Dain Nilsson <dain@yubico.com>
+
+	* tests/test_rest_api.py, yubiauth/rest_api.py: Correct content type
+	for JSON responses.
+
+2013-04-03  Dain Nilsson <dain@yubico.com>
+
+	* setup.py, tests/test_rest_api.py, yubiauth/model.py,
+	yubiauth/rest_api.py, yubiauth/yubi_auth.py: Added tests for REST
+	API.
+
+2013-04-02  Dain Nilsson <dain@yubico.com>
+
+	* yubiauth/rest_api.py: Handle missing attributes
+
+2013-04-02  Dain Nilsson <dain@yubico.com>
+
+	* setup.py, yubiauth/model.py: Added YubiKey validation using
+	Kami/python-yubico-client
+
+2013-04-02  Dain Nilsson <dain@yubico.com>
+
+	* yubiauth/rest_api.py: Better error checking
+
+2013-04-02  Dain Nilsson <dain@yubico.com>
+
+	* COPYING: Added COPYING
+
+2013-04-02  Dain Nilsson <dain@yubico.com>
+
+	* README: Added README
+
+2013-04-02  Dain Nilsson <dain@yubico.com>
+
+	* setup.py, yubiauth/__init__.py, yubiauth/config.py,
+	yubiauth/model.py, yubiauth/rest_api.py, yubiauth/yhsm.py,
+	yubiauth/yubi_auth.py: Added copyright headers.
+
+2013-04-02  Dain Nilsson <dain@yubico.com>
+
+	* yubiauth/rest_api.py: Rewrote REST API.
+
+2013-04-02  Dain Nilsson <dain@yubico.com>
+
+	* yubiauth/model.py: Added .copy() to User.attributes Added enabled
+	to YubiKey.data
+
+2013-03-27  Dain Nilsson <dain@yubico.com>
+
+	* tests/test_users.py, tests/test_yubikeys.py,
+	yubiauth/yubi_auth.py: Improved querying.
+
+2013-03-27  Dain Nilsson <dain@yubico.com>
+
+	* yubiauth/yubi_auth.py: Added query_yubikey.
+
+2013-03-27  Dain Nilsson <dain@yubico.com>
+
+	* tests/test_users.py, tests/test_yubikeys.py, yubiauth/model.py,
+	yubiauth/yubi_auth.py: Fixed tests.
+
+2013-03-27  Dain Nilsson <dain@yubico.com>
+
+	* yubiauth/model.py, yubiauth/yubi_auth.py: declarative stuff
+
+2013-03-27  Dain Nilsson <dain@yubico.com>
+
+	* yubiauth/model.py: Updated object model.
+
+2013-03-27  Dain Nilsson <dain@yubico.com>
+
+	* yubiauth/yubi_auth.py: Added basic querying to list_users.
+
+2013-03-26  Dain Nilsson <dain@yubico.com>
+
+	* yubiauth/yhsm_crypt.py: Removed old yhsm passlib file.
+
+2013-03-26  Dain Nilsson <dain@yubico.com>
+
+	* yubiauth/config.py, yubiauth/model.py, yubiauth/yhsm.py,
+	yubiauth/yubi_auth.py: rewrote yhsm passlib module.
+
+2013-03-22  Dain Nilsson <dain@yubico.com>
+
+	* setup.py, yubiauth/config.py, yubiauth/model.py,
+	yubiauth/yhsm_crypt.py: Added yhsm_crypt.
+
+2013-03-22  Dain Nilsson <dain@yubico.com>
+
+	* setup.py, yubiauth/config.py, yubiauth/model.py,
+	yubiauth/password_auth.py: Use passlib for password hashing.
+
+2013-03-21  Dain Nilsson <dain@yubico.com>
+
+	* yubiauth/model.py: Better string representations.
+
+2013-03-21  Dain Nilsson <dain@yubico.com>
+
+	* tests/test_users.py, tests/test_yubikeys.py: Fixed tests
+
+2013-03-21  Dain Nilsson <dain@yubico.com>
+
+	* tests/test_yubikeys.py, yubiauth/model.py, yubiauth/rest_api.py,
+	yubiauth/yubi_auth.py: Added attributes.
+
+2013-03-21  Dain Nilsson <dain@yubico.com>
+
+	* yubiauth/model.py, yubiauth/yubi_auth.py: Added docstrings.
+
+2013-03-21  Dain Nilsson <dain@yubico.com>
+
+	* .gitignore: Added html/ to .gitignore
+
+2013-03-20  Dain Nilsson <dain@yubico.com>
+
+	* tests/test_users.py, tests/test_yubikeys.py: Updated tests
+
+2013-03-20  Dain Nilsson <dain@yubico.com>
+
+	* yubiauth/config.py, yubiauth/model.py, yubiauth/rest_api.py,
+	yubiauth/yubi_auth.py: Made more OO.
+
+2013-03-20  Dain Nilsson <dain@yubico.com>
+
+	* tests/test_users.py, tests/test_yubikeys.py,
+	yubiauth/__init__.py, yubiauth/model.py, yubiauth/rest_api.py,
+	yubiauth/users.py, yubiauth/yubi_auth.py: More functions
+
+2013-03-20  Dain Nilsson <dain@yubico.com>
+
+	* Initial import
+
