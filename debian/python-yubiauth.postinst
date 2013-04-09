@@ -11,8 +11,16 @@ dbc_go python-yubiauth $@
 #Insert database configuration into conf file.
 . /etc/dbconfig-common/python-yubiauth.conf
 
-if [ "x$dbc_dbport" != "x" ]; then
-	dbc_dbport = ":$dbc_dbport"
+if [ "$dbc_dbserver" = "" ]; then
+	dbc_dbserver="localhost"
+fi
+
+if [ "$dbc_dbport" != "" ]; then
+	dbc_dbport=":$dbc_dbport"
+fi
+
+if [ "$dbc_dbtype" = "pgsql" ]; then
+	dbc_dbtype="postgresql"
 fi
 
 CONF_FILE="/etc/yubico/yubiauth/yubiauth.conf"
