@@ -1,15 +1,17 @@
 #YubiAuth REST API#
-All responses are in the format of JSON.
+All responses are formatted as JSON. Note that the URLs given in this document
+assume the default REST_PATH of 'yubiauth'. If this setting is changed, you
+will need to modify the below URLs accordingly.
 
 ##Users
 Users each have a unique user ID as well as a unique username. Each user has a
-password, and may have zero or more [YubiKeys](#yubikeys) assigned to them. Users can have
-[Attributes](#attributes).
+password, and may have zero or more [YubiKeys](#yubikeys) assigned to them. 
+Users can have [Attributes](#attributes).
 
 ###Create a user
 ####Resource
 
-    POST http://<host>/users
+    POST http://<host>/yubiauth/users
 
 ####Request
 **Paramerers**
@@ -18,7 +20,7 @@ password, and may have zero or more [YubiKeys](#yubikeys) assigned to them. User
 
 **Example:**
 
-    curl http://127.0.0.1:8080/users --data "username=trillian&password=foobar"
+    curl http://127.0.0.1:8080/yubiauth/users --data "username=trillian&password=foobar"
 
 ####Response
 Returns a **201 Created** response, with a **Location** header pointing to the 
@@ -29,7 +31,7 @@ created resource, as well as a JSON body containing the user ID and username:
 ###Listing users
 ####Resource
 
-    GET http://<host>/users
+    GET http://<host>/yubiauth/users
 
 ####Request
 Query parameters can optionally be provided to filter users by their Attributes,
@@ -37,7 +39,7 @@ or by their assigned YubiKeys. Only users matching the filters are shown.
 
 **Example:**
 
-    curl http://127.0.0.1:8080/users?yubikey=ccccccccccce
+    curl http://127.0.0.1:8080/yubiauth/users?yubikey=ccccccccccce
 
 ####Response
 Returns a list of user IDs and usernames, for example:
@@ -50,18 +52,18 @@ Returns a list of user IDs and usernames, for example:
 ###View a user
 ####Resource
 
-    GET http://<host>/users/<id-or-username>
+    GET http://<host>/yubiauth/users/<id-or-username>
 
 ####Request
 A user can be uniquely identified by either the user ID or by the username.
 
 **Example:**
 
-    curl http://127.0.0.1:8080/users/43
+    curl http://127.0.0.1:8080/yubiauth/users/43
     
 or
     
-    curl http://127.0.0.1:8080/users/ford
+    curl http://127.0.0.1:8080/yubiauth/users/ford
 
 ####Response
 Returns a JSON representation of the user:
@@ -78,11 +80,11 @@ Returns a JSON representation of the user:
 ###Deleting a user
 ####Resource
 
-    DELETE http://<host>/users/<id-or-username>
+    DELETE http://<host>/yubiauth/users/<id-or-username>
     
 or
 
-    POST http://<host>/users/<id-or-username>/delete
+    POST http://<host>/yubiauth/users/<id-or-username>/delete
     
 ####Request
 Deleting a user is done by sending a DELETE request to the user. To accomodate
@@ -90,11 +92,11 @@ browsers that do not support this, an alternative is available which uses POST.
 
 **Example:**
 
-    curl -X DELETE http://127.0.0.1:8080/users/41
+    curl -X DELETE http://127.0.0.1:8080/yubiauth/users/41
     
 or
 
-    curl -X POST http://127.0.0.1:8080/users/41/delete
+    curl -X POST http://127.0.0.1:8080/yubiauth/users/41/delete
     
 ####Response
 Returns an empty response with status **204 No Content** on success.
@@ -102,7 +104,7 @@ Returns an empty response with status **204 No Content** on success.
 ###(Re-) Setting a users password
 ####Resource
 
-    POST http://<host>/users/<id-or-username>/reset
+    POST http://<host>/yubiauth/users/<id-or-username>/reset
 
 ####Request
 **Parameters**
@@ -110,7 +112,7 @@ Returns an empty response with status **204 No Content** on success.
 
 **Example:**
 
-    curl http://127.0.0.1:8080/users/41/reset --data "password=newpass"
+    curl http://127.0.0.1:8080/yubiauth/users/41/reset --data "password=newpass"
 
 ####Response
 Returns an empty response with status **204 No Content** on success.
@@ -120,7 +122,7 @@ Checks if a given password and/or YubiKey OTP (One Time Password) is valid for t
 
 ####Resource
 
-    GET or POST http://<host>/users/<id-or-username>/validate
+    GET or POST http://<host>/yubiauth/users/<id-or-username>/validate
 
 ####Request
 **Parameters**
@@ -129,7 +131,7 @@ Checks if a given password and/or YubiKey OTP (One Time Password) is valid for t
 
 **Example:**
 
-    curl http://127.0.0.1:8080/users/41/validatepassword=foo&otp=ccccccccccceglgvbrbttbctichrejkvbjbgigetfgkr
+    curl http://127.0.0.1:8080/yubiauth/users/41/validatepassword=foo&otp=ccccccccccceglgvbrbttbctichrejkvbjbgigetfgkr
 
 ####Response
 A JSON object containing "valid_password" and "valid_otp" keys, each mapping to either true or false.
@@ -148,7 +150,7 @@ zero or more [Users](#users), and can be enabled or disabled. Each YubiKey can h
 ###Assigning a YubiKey to a User
 ####Resource
 
-    POST http://<host>/user/<id-or-username>/yubikeys
+    POST http://<host>/yubiauth/user/<id-or-username>/yubikeys
 
 ####Request
 **Parameters**
@@ -156,7 +158,7 @@ zero or more [Users](#users), and can be enabled or disabled. Each YubiKey can h
 
 **Example:**
 
-    curl http://127.0.0.1:8080/users/1/yubikeys --data "yubikey=ccccccccccce"
+    curl http://127.0.0.1:8080/yubiauth/users/1/yubikeys --data "yubikey=ccccccccccce"
 
 ####Response
 Returns an empty response with status **204 No Content** on success.
@@ -164,11 +166,11 @@ Returns an empty response with status **204 No Content** on success.
 ###View a YubiKey
 ####Resource
 
-    GET http://<host>/user/<id-or-username>/yubikeys/<prefix>
+    GET http://<host>/yubiauth/user/<id-or-username>/yubikeys/<prefix>
 
 or
 
-    GET http://<host>/yubikeys/<prefix>
+    GET http://<host>/yubiauth/yubikeys/<prefix>
 
 ####Request
 A YubiKey can be accessed either via a user to which is is assigned, or directly
@@ -177,11 +179,11 @@ via a user to which it is NOT assigned will result in a 404 Not Found.
 
 **Example:**
 
-    curl http://127.0.0.1:8080/users/1/yubikeys/ccccccccccce
+    curl http://127.0.0.1:8080/yubiauth/users/1/yubikeys/ccccccccccce
     
 or
 
-    curl http://127.0.0.1:8080/yubikeys/ccccccccccce
+    curl http://127.0.0.1:8080/yubiauth/yubikeys/ccccccccccce
 
 ####Response
 Returns a JSON representation of the YubiKey:
@@ -196,11 +198,11 @@ Returns a JSON representation of the YubiKey:
 ###Unassigning a YubiKey for a User
 ####Resource
 
-    DELETE http://<host>/user/<id-or-username>/yubikeys/<prefix>
+    DELETE http://<host>/yubiauth/user/<id-or-username>/yubikeys/<prefix>
 
 or
 
-    POST http://<host>/user/<id-or-username>/yubikeys/<prefix>/delete
+    POST http://<host>/yubiauth/user/<id-or-username>/yubikeys/<prefix>/delete
 
 ####Request
 Unassigning a YubiKey for a User to which it is assigned is done by sending a 
@@ -209,11 +211,11 @@ retaining its enabled state as well as any attributes. A POST alternative is ava
 
 **Example:**
 
-    curl -X DELETE http://127.0.0.1:8080/users/41/yubikeys/ccccccccccce
+    curl -X DELETE http://127.0.0.1:8080/yubiauth/users/41/yubikeys/ccccccccccce
     
 or
 
-    curl -X POST http://127.0.0.1:8080/users/41/yubikeys/ccccccccccce/delete
+    curl -X POST http://127.0.0.1:8080/yubiauth/users/41/yubikeys/ccccccccccce/delete
 
 ####Response
 Returns an empty response with status **204 No Content** on success.
@@ -221,11 +223,11 @@ Returns an empty response with status **204 No Content** on success.
 ###Deleting a YubiKey
 ####Resource
 
-    DELETE http://<host>/yubikeys/<prefix>
+    DELETE http://<host>/yubiauth/yubikeys/<prefix>
 
 or
 
-    POST http://<host>/yubikeys/<prefix>/delete
+    POST http://<host>/yubiauth/yubikeys/<prefix>/delete
 
 ####Request
 Deleting a YubiKey removes it together with any data it holds from the system, as well
@@ -233,11 +235,11 @@ as removing any assignment to it any Users may have.
 
 **Example:**
 
-    curl -X DELETE http://127.0.0.1:8080/yubikeys/ccccccccccce
+    curl -X DELETE http://127.0.0.1:8080/yubiauth/yubikeys/ccccccccccce
 
 or
 
-    curl -X POST http://127.0.0.1:8080/yubikeys/ccccccccccce/delete
+    curl -X POST http://127.0.0.1:8080/yubiauth/yubikeys/ccccccccccce/delete
 
 ####Response
 Returns an empty response with status **204 No Content** on success.
@@ -246,27 +248,27 @@ Returns an empty response with status **204 No Content** on success.
 Both [Users](#users) and [YubiKeys](#yubikeys) have attributes. These are accessed by 
 taking the path of the user or YubiKey and appending "/attributes" to the end, for example:
 
-    http://127.0.0.1:8080/users/42/attributes
+    http://127.0.0.1:8080/yubiauth/users/42/attributes
 
 or
 
-    http://127.0.0.1:8080/yubikeys/cccccccccccd/attributes
+    http://127.0.0.1:8080/yubiauth/yubikeys/cccccccccccd/attributes
     
 or
 
-    http://127.0.0.1:8080/users/42/yubikeys/cccccccccccd/attributes
+    http://127.0.0.1:8080/yubiauth/users/42/yubikeys/cccccccccccd/attributes
 
 In the following requests, any of the above formats qualify as **attribute_base**.
 
 ###View attributes
 ####Resource
 
-    GET http://<host>/<attribute_base>
+    GET http://<host>/yubiauth/<attribute_base>
 
 ####Request
 **Example**:
 
-    curl http://127.0.0.1:8080/users/42/attributes
+    curl http://127.0.0.1:8080/yubiauth/users/42/attributes
 
 ####Response
 A JSON object with key-values matching the attributes.
@@ -280,7 +282,7 @@ A JSON object with key-values matching the attributes.
 Sets the value of an attribute. If the attribute already exists, it will be overwritten.
 ####Resource
 
-    POST http://<host>/<attribute_base>
+    POST http://<host>/yubiauth/<attribute_base>
 
 ####Request
 **Parameters**
@@ -289,7 +291,7 @@ Sets the value of an attribute. If the attribute already exists, it will be over
 
 **Example**:
 
-    curl http://127.0.0.1:8080/users/42/attributes --data "key=email&value=ford@example.com"
+    curl http://127.0.0.1:8080/yubiauth/users/42/attributes --data "key=email&value=ford@example.com"
 
 ####Response
 Returns an empty response with status **204 No Content** on success.
@@ -299,12 +301,12 @@ Gets the value of a single attribute.
 
 ####Resource
 
-    GET http://<host>/<attribute_base>/<key>
+    GET http://<host>/yubiauth/<attribute_base>/<key>
 
 ####Request
 **Example:**
 
-    curl http://127.0.0.1:8080/users/42/attributes/email
+    curl http://127.0.0.1:8080/yubiauth/users/42/attributes/email
 
 ####Response
 A JSON string, or null, for example:
@@ -316,31 +318,34 @@ Removes an attribute, if it exists.
 
 ####Resource
 
-    DELETE http://<host>/<attribute_base>/<key>
+    DELETE http://<host>/yubiauth/<attribute_base>/<key>
 
 or
 
-    POST http://<host>/<attribute_base>/<key>/delete
+    POST http://<host>/yubiauth/<attribute_base>/<key>/delete
 
 ####Request
-Attributes are removed by sending a HTTP DELETE request (POST alternative available).
+Attributes are removed by sending a HTTP DELETE request (POST alternative 
+available).
 
 **Example:**
 
-    curl -X DELETE http://127.0.0.1:8080/users/42/attributes/email
+    curl -X DELETE http://127.0.0.1:8080/yubiauth/users/42/attributes/email
 
 ####Response
 Returns an empty response with status **204 No Content**.
 
 ##Authentication
-Validate user credentials. Also see Validating a users password and/or YubiKey under [Users](#users)
+Validate user credentials. Also see Validating a users password and/or YubiKey
+under [Users](#users).
 
 ###Authenticate a user
-Gets a user if the provided credentials are valid and sufficient to authenticate the user.
+Gets a user if the provided credentials are valid and sufficient to 
+authenticate the user.
 
 ####Resource
 
-    GET or POST http://<host>/authenticate
+    GET or POST http://<host>/yubiauth/authenticate
 
 ####Request
 **Parameters**
@@ -350,12 +355,12 @@ Gets a user if the provided credentials are valid and sufficient to authenticate
 
 **Example:**
 
-    curl http://127.0.0.1:8080/authenticate --data "username=trillian&password=foo"
+    curl http://127.0.0.1:8080/yubiauth/authenticate --data "username=trillian&password=foo"
 
 ####Response
 If the given parameters are valid, a JSON object describing the user is returned
-(the same as accessing the user via /users/<id-or-username>). If not, an error is generated.
-For example:
+(the same as accessing the user via /users/<id-or-username>). If not, an error 
+is generated. For example:
 
     {
         "attributes": {
