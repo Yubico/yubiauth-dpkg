@@ -1,5 +1,22 @@
 2013-04-09  Dain Nilsson <dain@yubico.com>
 
+	* NEWS: Updated NEWS for release.
+
+2013-04-09  Dain Nilsson <dain@yubico.com>
+
+	* maintainer-scripts/make-release.sh: Updated release script.
+
+2013-04-09  Dain Nilsson <dain@yubico.com>
+
+	* NEWS, setup.py: Bumped version
+
+2013-04-09  Dain Nilsson <dain@yubico.com>
+
+	* yubiauth/config.py: Don't create compiled version of the settings
+	file.
+
+2013-04-09  Dain Nilsson <dain@yubico.com>
+
 	* NEWS, setup.py: Updated NEWS for 0.1.1 release.
 
 2013-04-09  Dain Nilsson <dain@yubico.com>
