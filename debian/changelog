@@ -1,3 +1,11 @@
+python-yubiauth (0.1.1-1) unstable; urgency=low
+
+  * New upstream release
+
+  * Automated database creation using dbconfig-common.
+
+ -- Dain Nilsson <dain@yubico.com>  Tue, 09 Apr 2013 13:47:21 +0200
+
 python-yubiauth (0.1-1) unstable; urgency=low
 
   * source package automatically created by stdeb 0.6.0+git
