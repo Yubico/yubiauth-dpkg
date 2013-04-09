@@ -1,1 +1,2 @@
 yubiauth.conf /etc/yubico/yubiauth/
+debian/conf/apache.conf /etc/yubico/yubiauth/

@@ -11,6 +11,19 @@ if [ -f /usr/share/dbconfig-common/dpkg/postrm ]; then
     dbc_go python-yubiauth $@
 fi
 
+#Apache configuration
+if [ "$1" = "remove" ] || [ "$1" = "purge" ]; then
+	if [ -L /etc/apache2/conf.d/yubiauth.conf ]; then
+		rm -f /etc/apache2/conf.d/yubiauth.conf
+	fi
+
+	if [ -x /usr/sbin/invoke-rc.d ]; then
+		invoke-rc.d apache2 reload 3>/dev/null || true
+	else
+		/etc/init.d/apache2 reload 3>/dev/null || true
+	fi
+fi
+
 #DEBHELPER#
 
 exit 0

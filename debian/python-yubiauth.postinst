@@ -33,6 +33,24 @@ python -m yubiauth.model -c create_db\(engine\)
 #Fix permissions
 chmod 0600 $CONF_FILE
 
+#Apache configuration
+if [ -d /etc/apache2/conf.d ] && [ ! -e /etc/apache2/conf.d/yubiauth.conf ]; then
+	#Alter permissions for apache
+	chown root:www-data $CONF_FILE
+	chmod g+r $CONF_FILE
+
+	#Symlink configuration
+	ln -s ../../yubico/yubiauth/apache.conf /etc/apache2/conf.d/yubiauth.conf
+fi
+
+if [ -f /etc/init.d/apache2 ] ; then
+	if [ -x /usr/sbin/invoke-rc.d ]; then
+		invoke-rc.d apache2 reload 3>/dev/null || true
+	else
+		/etc/init.d/apache2 reload 3>/dev/null || true
+	fi
+fi
+
 #DEBHELPER#
 
 exit 0
