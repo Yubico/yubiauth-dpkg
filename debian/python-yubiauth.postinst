@@ -1,0 +1,12 @@
+#!/bin/sh
+
+set -e
+
+. /usr/share/debconf/confmodule
+. /usr/share/dbconfig-common/dpkg/postinst
+
+dbc_go python-yubiauth $@
+
+#DEBHELPER#
+
+exit 0

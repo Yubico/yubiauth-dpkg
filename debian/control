@@ -6,7 +6,7 @@ Priority: extra
 Build-Depends: python-setuptools (>= 0.6b3),
                python-all (>= 2.6.6-3),
                debhelper (>= 7),
-               python-nose
+               python-nose,
 Standards-Version: 3.9.4
 Homepage: https://github.com/Yubico/yubiauth
 Vcs-Browser: https://github.com/Yubico/yubiauth-dpkg
@@ -18,7 +18,10 @@ Depends: ${misc:Depends},
          ${python:Depends},
          python-webob,
          python-sqlalchemy,
-         python-passlib
+         python-passlib,
+         mysql-server | postgresql,
+         python-mysqldb | python-psycopg2,
+         dbconfig-common
 XB-Python-Version: ${python:Versions}
 Provides: ${python:Provides}
 Description: User management system with YubiKey validation
