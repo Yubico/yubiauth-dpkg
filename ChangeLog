@@ -1,3 +1,38 @@
+2013-04-09  Dain Nilsson <dain@yubico.com>
+
+	* NEWS, setup.py: Updated NEWS for 0.1.1 release.
+
+2013-04-09  Dain Nilsson <dain@yubico.com>
+
+	* yubiauth/config.py: Rename configuration file to yubiauth.conf
+
+2013-04-09  Dain Nilsson <dain@yubico.com>
+
+	* test/test_rest_api.py: Updated REST tests for base URL.
+
+2013-04-09  Dain Nilsson <dain@yubico.com>
+
+	* doc: Updated documentation
+
+2013-04-09  Dain Nilsson <dain@yubico.com>
+
+	* yubiauth/config.py, yubiauth/default_settings.py,
+	yubiauth/rest_api.py: Added REST API base path setting.
+
+2013-04-08  Dain Nilsson <dain@yubico.com>
+
+	* maintainer-scripts/make-release.sh: Add git push to
+	yubico.github.com publishing.
+
+2013-04-08  Dain Nilsson <dain@yubico.com>
+
+	* maintainer-scripts/make-release.sh: Added publishing to
+	make-release.sh
+
+2013-04-08  Dain Nilsson <dain@yubico.com>
+
+	* NEWS, setup.py: Bumped version post release.
+
 2013-04-08  Dain Nilsson <dain@yubico.com>
 
 	* NEWS: Updated NEWS for 0.1
