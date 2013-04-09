@@ -30,6 +30,9 @@ fi
 #Create the DB tables
 python -m yubiauth.model -c create_db\(engine\)
 
+#Fix permissions
+chmod 0600 $CONF_FILE
+
 #DEBHELPER#
 
 exit 0
