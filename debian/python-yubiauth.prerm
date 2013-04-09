@@ -7,7 +7,7 @@ set -e
 dbc_go python-yubiauth $@
 
 #Python compiles the settings file when it can
-rm -f /etc/yubico/yubiauth/yubiauthc
+rm -f /etc/yubico/yubiauth/yubiauth.confc
 
 #DEBHELPER#
 

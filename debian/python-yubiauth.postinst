@@ -15,7 +15,7 @@ if [ "x$dbc_dbport" != "x" ]; then
 	dbc_dbport = ":$dbc_dbport"
 fi
 
-CONF_FILE="/etc/yubico/yubiauth/yubiauth"
+CONF_FILE="/etc/yubico/yubiauth/yubiauth.conf"
 CONF_STRING="$dbc_dbtype://$dbc_dbuser:$dbc_dbpass@$dbc_dbserver$dbc_dbport/$dbc_dbname"
 
 if ! `grep -q "^DATABASE_CONFIGURATION.*'$CONF_STRING'.*$" $CONF_FILE`; then
