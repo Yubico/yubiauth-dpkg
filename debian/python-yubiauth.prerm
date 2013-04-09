@@ -6,6 +6,9 @@ set -e
 . /usr/share/dbconfig-common/dpkg/prerm
 dbc_go python-yubiauth $@
 
+#Python compiles the settings file when it can
+rm -f /etc/yubico/yubiauth/yubiauthc
+
 #DEBHELPER#
 
 exit 0

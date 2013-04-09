@@ -27,6 +27,8 @@ if ! `grep -q "^DATABASE_CONFIGURATION.*'$CONF_STRING'.*$" $CONF_FILE`; then
 	echo "DATABASE_CONFIGURATION = '$CONF_STRING'"; } >> $CONF_FILE
 fi
 
+#Create the DB tables
+python -m yubiauth.model -c create_db\(engine\)
 
 #DEBHELPER#
 
