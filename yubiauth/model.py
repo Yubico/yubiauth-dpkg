@@ -44,7 +44,7 @@ from sqlalchemy.orm import sessionmaker, relationship, backref
 from sqlalchemy.orm.collections import attribute_mapped_collection
 from sqlalchemy.ext.associationproxy import association_proxy
 
-from yubico.yubico import Yubico
+from yubico_client import Yubico
 from passlib.context import CryptContext
 from passlib.registry import register_crypt_handler_path
 
@@ -388,6 +388,4 @@ def create_db(engine):
 
 
 engine = create_engine(settings['db'], echo=False)
-# TODO: Remove this, add a utility to create the tables.
-create_db(engine)
 Session = sessionmaker(bind=engine)
