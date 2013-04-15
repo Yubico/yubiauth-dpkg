@@ -16,9 +16,6 @@ Package: python-yubiauth
 Architecture: all
 Depends: ${misc:Depends},
          ${python:Depends},
-         python-webob,
-         python-sqlalchemy,
-         python-passlib,
          mysql-server | postgresql,
          python-mysqldb | python-psycopg2,
          dbconfig-common
