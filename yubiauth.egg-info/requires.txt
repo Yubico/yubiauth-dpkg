@@ -1,4 +1,4 @@
 sqlalchemy
 webob
 passlib
-yubico
+yubico-client

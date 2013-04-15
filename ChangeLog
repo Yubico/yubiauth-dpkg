@@ -1,3 +1,59 @@
+2013-04-15  Dain Nilsson <dain@yubico.com>
+
+	* NEWS: Updated NEWS for release.
+
+2013-04-15  Dain Nilsson <dain@yubico.com>
+
+	* test/test_rest_api.py, yubiauth/model.py: Removed automatic table
+	creation.
+
+2013-04-15  Dain Nilsson <dain@yubico.com>
+
+	* NEWS: Updated NEWS.
+
+2013-04-15  Dain Nilsson <dain@yubico.com>
+
+	* yubiauth/model.py: Updated yubico-client usage.
+
+2013-04-11  Dain Nilsson <dain@yubico.com>
+
+	* setup.py: Change dependency yubico -> yubico-client
+
+2013-04-10  Dain Nilsson <dain@yubico.com>
+
+	* test/test_yhsm.py: Removed test_yhsm pyhsm requirement unless run
+	with -a hsm
+
+2013-04-10  Dain Nilsson <dain@yubico.com>
+
+	* yubiauth/yhsm.py: Use regualar b64.
+
+2013-04-10  Dain Nilsson <dain@yubico.com>
+
+	* setup.py: Only require pyhsm for tests if the 'hsm' attribute is
+	set.
+
+2013-04-10  Dain Nilsson <dain@yubico.com>
+
+	* MANIFEST.in: Removed README from manifest as it is included by
+	default.
+
+2013-04-10  Dain Nilsson <dain@yubico.com>
+
+	* .travis.yml: Run tests through setup.py
+
+2013-04-10  Dain Nilsson <dain@yubico.com>
+
+	* .travis.yml: Don't initialize submodules
+
+2013-04-10  Dain Nilsson <dain@yubico.com>
+
+	* .travis.yml: Added .travis.yml
+
+2013-04-09  Dain Nilsson <dain@yubico.com>
+
+	* NEWS, setup.py: Bumped version.
+
 2013-04-09  Dain Nilsson <dain@yubico.com>
 
 	* NEWS: Updated NEWS for release.
