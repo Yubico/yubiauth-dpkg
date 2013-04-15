@@ -36,7 +36,7 @@ if ! `grep -q "^DATABASE_CONFIGURATION.*'$CONF_STRING'.*$" $CONF_FILE`; then
 fi
 
 #Create the DB tables
-python -m yubiauth.model -c create_db\(engine\)
+python -c "from yubiauth import model; model.create_db(model.engine)"
 
 #Fix permissions
 chmod 0600 $CONF_FILE
