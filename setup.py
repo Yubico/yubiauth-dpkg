@@ -42,14 +42,14 @@ if 'test' in sys.argv or 'nosetests' in sys.argv:
 
 setup(
     name='yubiauth',
-    version='0.2.0',
+    version='0.2.1',
     author='Dain Nilsson',
     author_email='dain@yubico.com',
     maintainer='Yubico Open Source Maintainers',
     maintainer_email='ossmaint@yubico.com',
     url='https://github.com/Yubico/yubiauth',
     license='BSD 2 clause',
-    packages=['yubiauth'],
+    packages=['yubiauth', 'yubiauth.core', 'yubiauth.client', 'yubiauth.util'],
     setup_requires=['nose>=1.0'],
     install_requires=['sqlalchemy', 'webob', 'passlib', 'yubico-client'],
     test_suite="nose.collector",
