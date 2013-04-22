@@ -22,3 +22,16 @@ yubiauth.egg-info/SOURCES.txt
 yubiauth.egg-info/dependency_links.txt
 yubiauth.egg-info/requires.txt
 yubiauth.egg-info/top_level.txt
+yubiauth/client/__init__.py
+yubiauth/client/controller.py
+yubiauth/client/model.py
+yubiauth/client/rest.py
+yubiauth/core/__init__.py
+yubiauth/core/controller.py
+yubiauth/core/model.py
+yubiauth/core/rest.py
+yubiauth/util/__init__.py
+yubiauth/util/controller.py
+yubiauth/util/model.py
+yubiauth/util/rest.py
+yubiauth/util/utils.py

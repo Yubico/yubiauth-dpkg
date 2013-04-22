@@ -1,5 +1,22 @@
 2013-04-22  Dain Nilsson <dain@yubico.com>
 
+	* NEWS: Updated NEWS for release.
+
+2013-04-22  Dain Nilsson <dain@yubico.com>
+
+	* NEWS, setup.py: Add missing files to dist.
+
+2013-04-22  Dain Nilsson <dain@yubico.com>
+
+	* maintainer-scripts/make-release.sh: Added PyPI uploading to
+	make-release.
+
+2013-04-22  Dain Nilsson <dain@yubico.com>
+
+	* NEWS, setup.py: Bumped version post release.
+
+2013-04-22  Dain Nilsson <dain@yubico.com>
+
 	* setup.py: Change Development Status to Alpha.
 
 2013-04-22  Dain Nilsson <dain@yubico.com>
