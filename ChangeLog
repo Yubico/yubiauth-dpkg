@@ -1,3 +1,127 @@
+2013-04-22  Dain Nilsson <dain@yubico.com>
+
+	* setup.py: Change Development Status to Alpha.
+
+2013-04-22  Dain Nilsson <dain@yubico.com>
+
+	* NEWS: Updated NEWS for release.
+
+2013-04-22  Dain Nilsson <dain@yubico.com>
+
+	* test/test_client_api.py, test/test_rest_api.py,
+	yubiauth/client/rest.py: Add tests.
+
+2013-04-22  Dain Nilsson <dain@yubico.com>
+
+	* test/test_users.py, yubiauth/client/controller.py,
+	yubiauth/client/model.py, yubiauth/client/rest.py,
+	yubiauth/core/controller.py, yubiauth/core/model.py,
+	yubiauth/core/rest.py, yubiauth/util/rest.py: Made database
+	transactions explicit, per request.
+
+2013-04-22  Dain Nilsson <dain@yubico.com>
+
+	* maintainer-scripts/make-release.sh: Fix release publishing.
+
+2013-04-19  Dain Nilsson <dain@yubico.com>
+
+	* NEWS, setup.py: Bumped version.
+
+2013-04-19  Dain Nilsson <dain@yubico.com>
+
+	* yubiauth/client/controller.py, yubiauth/client/model.py,
+	yubiauth/client/rest.py: Add session using HTTP headers.
+
+2013-04-19  Dain Nilsson <dain@yubico.com>
+
+	* yubiauth/client/model.py, yubiauth/client/rest.py,
+	yubiauth/util/rest.py: Added login/logout to REST API.
+
+2013-04-19  Dain Nilsson <dain@yubico.com>
+
+	* test/test_rest_api.py, yubiauth/client/controller.py,
+	yubiauth/client/model.py, yubiauth/config.py,
+	yubiauth/core/controller.py, yubiauth/core/model.py,
+	yubiauth/core/rest.py, yubiauth/default_settings.py,
+	yubiauth/util/__init__.py, yubiauth/util/utils.py: Removed
+	authenticate form core API.
+
+2013-04-19  Dain Nilsson <dain@yubico.com>
+
+	* yubiauth/client/controller.py, yubiauth/core/controller.py,
+	yubiauth/util/controller.py: Added YubiKey revocation.
+
+2013-04-19  Dain Nilsson <dain@yubico.com>
+
+	* test/test_rest_api.py, test/test_users.py, test/test_yubikeys.py: 
+	Fixed tests.
+
+2013-04-18  Dain Nilsson <dain@yubico.com>
+
+	* yubiauth/client/controller.py, yubiauth/client/model.py: Improved
+	session creation/loading.
+
+2013-04-18  Dain Nilsson <dain@yubico.com>
+
+	* setup.py, yubiauth/__init__.py, yubiauth/client/controller.py,
+	yubiauth/client/model.py, yubiauth/config.py,
+	yubiauth/core/model.py, yubiauth/core/rest.py,
+	yubiauth/default_settings.py: Let Client use core model directly.
+
+2013-04-18  Dain Nilsson <dain@yubico.com>
+
+	* yubiauth/client/rest.py, yubiauth/core/rest.py, yubiauth/rest.py,
+	yubiauth/util/rest.py: Added main rest.py for serving all APIs.
+
+2013-04-17  Dain Nilsson <dain@yubico.com>
+
+	* yubiauth/client/__init__.py, yubiauth/client/controller.py,
+	yubiauth/client/model.py, yubiauth/core/controller.py: Work on
+	Client.
+
+2013-04-17  Dain Nilsson <dain@yubico.com>
+
+	* test/test_rest_api.py, test/test_users.py, test/test_yubikeys.py,
+	yubiauth/__init__.py, yubiauth/client/__init__.py,
+	yubiauth/client/model.py, yubiauth/core/model.py,
+	yubiauth/util/controller.py, yubiauth/util/model.py: Model utils.
+
+2013-04-17  Dain Nilsson <dain@yubico.com>
+
+	* NEWS: Updated NEWS
+
+2013-04-17  Dain Nilsson <dain@yubico.com>
+
+	* test/test_rest_api.py, test/test_users.py, test/test_yubikeys.py,
+	yubiauth/__init__.py, yubiauth/client/rest.py,
+	yubiauth/client/rest_api.py, yubiauth/core/__init__.py,
+	yubiauth/core/controller.py, yubiauth/core/model.py,
+	yubiauth/core/rest.py, yubiauth/model.py, yubiauth/rest_api.py,
+	yubiauth/rest_common.py, yubiauth/util/__init__.py,
+	yubiauth/util/controller.py, yubiauth/util/rest.py,
+	yubiauth/yubi_auth.py: Rename done.
+
+2013-04-17  Dain Nilsson <dain@yubico.com>
+
+	* yubiauth/client/model.py, yubiauth/client/rest_api.py,
+	yubiauth/config.py, yubiauth/default_settings.py,
+	yubiauth/model.py, yubiauth/rest_api.py, yubiauth/rest_common.py,
+	yubiauth/yhsm.py: Began restructure.
+
+2013-04-15  Dain Nilsson <dain@yubico.com>
+
+	* yubiauth/config.py, yubiauth/default_settings.py: Fixed some
+	formatting.
+
+2013-04-15  Dain Nilsson <dain@yubico.com>
+
+	* yubiauth/config.py: Ignore settings file if we do not have
+	permissions to read it.
+
+2013-04-15  Dain Nilsson <dain@yubico.com>
+
+	* NEWS, setup.py: Bumped version post release.
+
 2013-04-15  Dain Nilsson <dain@yubico.com>
 
 	* NEWS: Updated NEWS for release.

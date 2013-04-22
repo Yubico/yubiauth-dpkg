@@ -1,29 +1,31 @@
 from nose import with_setup
 from nose.tools import raises
 
-from yubiauth.model import create_db
-from yubiauth import YubiAuth
+from yubiauth import create_tables
+from yubiauth.core import YubiAuth
 
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 
 engine = create_engine('sqlite:///:memory:', echo=True)
-create_db(engine)
+create_tables(engine)
 Session = sessionmaker(bind=engine)
 auth = None
 
 
 def setup():
     global auth
-    auth = YubiAuth(Session)
+    auth = YubiAuth(Session())
     teardown()
     auth.create_user('user1', 'p4ssw0rd')
     auth.create_user('user2', 'foo')
+    auth.commit()
 
 
 def teardown():
     for user in auth.query_users():
         auth.get_user(user['id']).delete()
+    auth.commit()
 
 
 @with_setup(setup, teardown)

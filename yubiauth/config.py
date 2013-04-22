@@ -38,17 +38,22 @@ import os
 import default_settings
 
 
-try:
-    SETTINGS_FILE = os.environ['YUBIAUTH_SETTINGS']
-except KeyError:
-    SETTINGS_FILE = '/etc/yubico/yubiauth/yubiauth.conf'
+SETTINGS_FILE = os.getenv('YUBIAUTH_SETTINGS',
+                          '/etc/yubico/yubiauth/yubiauth.conf')
 
 VALUES = {
+    #Core
     'DATABASE_CONFIGURATION': 'db',
     'YKVAL_SERVERS': 'ykval',
+    'YKVAL_CLIENT_ID': 'ykval_id',
+    'YKVAL_CLIENT_SECRET': 'ykval_secret',
+    'USE_HSM': 'use_hsm',
     'YHSM_DEVICE': 'yhsm_device',
     'CRYPT_CONTEXT': 'crypt_context',
     'REST_PATH': 'rest_path',
+    #Client
+    'CORE_URL': 'core_url',
+    'SECURITY_LEVEL': 'security_level'
 }
 
 
@@ -69,7 +74,7 @@ try:
     user_settings = imp.load_source('user_settings', SETTINGS_FILE)
     settings = parse(user_settings, settings)
 except IOError, e:
-    if not e.errno in [errno.ENOENT]:
+    if not e.errno in [errno.ENOENT, errno.EACCES]:
         raise e
 finally:
     sys.dont_write_bytecode = dont_write_bytecode
@@ -77,4 +82,5 @@ finally:
 settings['rest_path'] = settings['rest_path'].strip('/')
 
 if not 'YHSM_DEVICE' in os.environ and 'yhsm_device' in settings:
+    #The environment variable is the one that is actually used.
     os.environ['YHSM_DEVICE'] = settings['yhsm_device']

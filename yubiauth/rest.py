@@ -1,4 +1,3 @@
-#!/usr/bin/python
 #
 # Copyright (c) 2013 Yubico AB
 # All rights reserved.
@@ -28,43 +27,32 @@
 # POSSIBILITY OF SUCH DAMAGE.
 #
 
-from setuptools import setup
-import sys
-import os
+from wsgiref.simple_server import make_server
+from webob import exc
+from webob.dec import wsgify
 
-tests_require = ['WebTest']
+from yubiauth.core.rest import application as core_api
+from yubiauth.client.rest import application as client_api
 
-# Don't load custom settings when running tests
-if 'test' in sys.argv or 'nosetests' in sys.argv:
-    os.environ['YUBIAUTH_SETTINGS'] = '/dev/null'
-    if 'hsm' in sys.argv:
-        tests_require.append('pyhsm')
 
-setup(
-    name='yubiauth',
-    version='0.2.0',
-    author='Dain Nilsson',
-    author_email='dain@yubico.com',
-    maintainer='Yubico Open Source Maintainers',
-    maintainer_email='ossmaint@yubico.com',
-    url='https://github.com/Yubico/yubiauth',
-    license='BSD 2 clause',
-    packages=['yubiauth'],
-    setup_requires=['nose>=1.0'],
-    install_requires=['sqlalchemy', 'webob', 'passlib', 'yubico-client'],
-    test_suite="nose.collector",
-    tests_require=tests_require,
-    classifiers=[
-        'License :: OSI Approved :: BSD License',
-        'Operating System :: OS Independent',
-        'Programming Language :: Python',
-        'Development Status :: 3 - Alpha',
-        'Environment :: Web Environment',
-        'Intended Audience :: Developers',
-        'Intended Audience :: System Administrators',
-        'Topic :: Security :: Cryptography',
-        'Topic :: Internet :: WWW/HTTP',
-        'Topic :: Internet :: WWW/HTTP :: WSGI :: Application',
-        'Topic :: Software Development :: Libraries :: Python Modules'
-    ]
-)
+class YubiAuthAPI(object):
+    def __init__(self):
+        self._apis = [
+            core_api,
+            client_api
+        ]
+
+    @wsgify
+    def __call__(self, request):
+        for api in self._apis:
+            if request.path.startswith(api._base_path):
+                return api(request)
+
+        raise exc.HTTPNotFound
+
+
+application = YubiAuthAPI()
+
+if __name__ == '__main__':
+    httpd = make_server('localhost', 8080, application)
+    httpd.serve_forever()
