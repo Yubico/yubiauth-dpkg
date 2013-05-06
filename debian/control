@@ -8,6 +8,7 @@ Build-Depends: python-setuptools (>= 0.6b3),
                debhelper (>= 8),
                python-nose,
 Standards-Version: 3.9.4
+Recommends: yhsm-daemon
 Homepage: https://github.com/Yubico/yubiauth
 Vcs-Browser: https://github.com/Yubico/yubiauth-dpkg
 Vcs-Git: git://github.com/Yubico/yubiauth-dpkg.git
