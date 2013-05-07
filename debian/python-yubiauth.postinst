@@ -42,13 +42,15 @@ python -c "from yubiauth import create_tables; create_tables()"
 chmod 0600 $CONF_FILE
 
 #Apache configuration
-if [ -d /etc/apache2/conf.d ] && [ ! -e /etc/apache2/conf.d/yubiauth.conf ]; then
+if [ -d /etc/apache2/conf.d ]; then
 	#Alter permissions for apache
 	chown root:www-data $CONF_FILE
 	chmod g+r $CONF_FILE
 
-	#Symlink configuration
-	ln -s ../../yubico/yubiauth/apache.conf /etc/apache2/conf.d/yubiauth.conf
+	if [ ! -e /etc/apache2/conf.d/yubiauth.conf ]; then
+		#Symlink configuration
+		ln -s ../../yubico/yubiauth/apache.conf /etc/apache2/conf.d/yubiauth.conf
+	fi
 fi
 
 if [ -f /etc/init.d/apache2 ] ; then
