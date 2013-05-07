@@ -8,7 +8,6 @@ Build-Depends: python-setuptools (>= 0.6b3),
                debhelper (>= 8),
                python-nose,
 Standards-Version: 3.9.4
-Recommends: yhsm-daemon
 Homepage: https://github.com/Yubico/yubiauth
 Vcs-Browser: https://github.com/Yubico/yubiauth-dpkg
 Vcs-Git: git://github.com/Yubico/yubiauth-dpkg.git
@@ -22,6 +21,7 @@ Depends: ${misc:Depends},
          dbconfig-common
 XB-Python-Version: ${python:Versions}
 Provides: ${python:Provides}
+Recommends: yhsm-daemon
 Description: User management system with YubiKey validation
  YubiAuth provides a user management system which can be used as a base for 
  other systems. It allows the creation of users, which can be authenticated by
