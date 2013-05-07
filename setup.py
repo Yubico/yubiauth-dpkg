@@ -31,18 +31,20 @@
 from setuptools import setup
 import sys
 import os
+from release import release
 
-tests_require = ['WebTest']
+tests_require = ['WebTest', 'mock']
 
-# Don't load custom settings when running tests
-if 'test' in sys.argv or 'nosetests' in sys.argv:
-    os.environ['YUBIAUTH_SETTINGS'] = '/dev/null'
-    if 'hsm' in sys.argv:
-        tests_require.append('pyhsm')
+# Don't load custom settings (for tests, etc.)
+os.environ['YUBIAUTH_SETTINGS'] = '/dev/null'
+
+# Require pyhsm if running hsm tests
+if 'hsm' in sys.argv:
+    tests_require.append('pyhsm')
 
 setup(
     name='yubiauth',
-    version='0.2.1',
+    version='0.2.2',
     author='Dain Nilsson',
     author_email='dain@yubico.com',
     maintainer='Yubico Open Source Maintainers',
@@ -54,6 +56,7 @@ setup(
     install_requires=['sqlalchemy', 'webob', 'passlib', 'yubico-client'],
     test_suite="nose.collector",
     tests_require=tests_require,
+    cmdclass={'release': release},
     classifiers=[
         'License :: OSI Approved :: BSD License',
         'Operating System :: OS Independent',

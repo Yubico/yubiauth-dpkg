@@ -122,7 +122,7 @@ class Route(object):
                 return controller, match.groups()
             except AttributeError:
                 return json_error('Method %s not allowed' % request.method,
-                                  status=405)
+                                  status=405), None
 
         return None, None
 
@@ -131,7 +131,6 @@ class REST_API(object):
     __routes__ = []
 
     def __init__(self, base_path='/'):
-        print '%r using base path: %s' % (self.__class__, base_path)
         self._base_path = base_path
 
     @wsgify
@@ -143,6 +142,8 @@ class REST_API(object):
             controller, sub_args = route.get_controller(request,
                                                         self._base_path)
             if controller:
+                if isinstance(controller, Response):
+                    return controller
                 self._call_setup(request)
                 args += sub_args
                 response = None
