@@ -88,7 +88,7 @@ loopback interface.
 Now the only thing remaining is to tell YubiAuth to use the YubiHSM, which is
 done by editing the configuration file located here:
 
-	/etc/yubico/yubiauth/yubiauth.conf
+	/etc/yubico/auth/yubiauth.conf
 
 First off, find the USE_HSM setting, and change it to True:
 

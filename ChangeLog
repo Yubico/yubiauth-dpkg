@@ -1,5 +1,23 @@
 2013-05-07  Dain Nilsson <dain@yubico.com>
 
+	* test/test_client_api.py: Updated test.
+
+2013-05-07  Dain Nilsson <dain@yubico.com>
+
+	* NEWS, setup.py: Bumped version for release.
+
+2013-05-07  Dain Nilsson <dain@yubico.com>
+
+	* NEWS, doc, yubiauth/config.py: Moved configuration to
+	/etc/yubico/auth/yubiauth.conf
+
+2013-05-07  Dain Nilsson <dain@yubico.com>
+
+	* yubiauth/client/rest.py: Re-check password/otp when changing
+	password or adding YubiKey.
+
+2013-05-07  Dain Nilsson <dain@yubico.com>
+
 	* NEWS, setup.py: Updated version and NEWS for new release.
 
 2013-05-07  Dain Nilsson <dain@yubico.com>
