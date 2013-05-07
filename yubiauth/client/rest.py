@@ -28,10 +28,13 @@
 #
 
 from wsgiref.simple_server import make_server
+from yubiauth.util import validate_otp
 from yubiauth.util.rest import (REST_API, Route, json_response, json_error,
                                 extract_params)
 from yubiauth import settings
 from yubiauth.client.controller import Client, requires_otp
+
+import logging as log
 
 SESSION_COOKIE = 'YubiAuth-Session'
 SESSION_HEADER = 'X-%s' % SESSION_COOKIE
@@ -54,6 +57,7 @@ class ClientAPI(REST_API):
         Route(r'^logout$', 'logout'),
         Route(r'^status$', 'status'),
         Route(r'^password$', post='set_password'),
+        Route(r'^yubikey$', post='assign_yubikey'),
         Route(r'^revoke/generate$', 'generate_revocation'),
         Route(r'^revoke$', post='revoke_yubikey')
     ]
@@ -84,30 +88,27 @@ class ClientAPI(REST_API):
                                     secure=https, httponly=True)
                 response.headers[SESSION_HEADER] = sessionId
             elif SESSION_COOKIE in request.cookies:
-                print "Unsetting cookie!"
                 response.set_cookie(SESSION_COOKIE, None)
         finally:
             request.client.commit()
             del request.client
 
-    @extract_params('username', 'password', 'otp?')
-    def authenticate(self, request, username, password, otp=None):
+    @extract_params('username?', 'password?', 'otp?')
+    def authenticate(self, request, username=None, password=None, otp=None):
         try:
             request.client.authenticate(username, password, otp)
             return json_response(True)
         except:
             return json_response(False, status=400)
 
-    @extract_params('username', 'password', 'otp?')
-    def login(self, request, username, password, otp=None):
+    @extract_params('username?', 'password?', 'otp?')
+    def login(self, request, username=None, password=None, otp=None):
         try:
             session = request.client.create_session(username, password, otp)
             request.session = session
             return json_response(True)
         except Exception as e:
-            import traceback
-            traceback.print_exc()
-            print e
+            log.warn(e)
             return json_error('Invalid credentials!')
 
     @require_session
@@ -129,6 +130,17 @@ class ClientAPI(REST_API):
             return json_error('Invalid credentials!')
 
         user.set_password(newpass)
+        return json_response(True)
+
+    @require_session
+    @extract_params('otp')
+    def assign_yubikey(self, request, otp):
+        user = request.session.user
+        if not validate_otp(otp):
+            return json_error('Invalid OTP!')
+        prefix = otp[:-32]
+        if not prefix in user.yubikeys:
+            user.assign_yubikey(prefix)
         return json_response(True)
 
     @require_session

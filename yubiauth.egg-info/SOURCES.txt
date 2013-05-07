@@ -3,10 +3,12 @@ ChangeLog
 MANIFEST.in
 NEWS
 README
+release.py
 setup.cfg
 setup.py
 doc/Home.md
 doc/Rest-API.md
+doc/YubiHSM-Setup.md
 test/test_client_api.py
 test/test_rest_api.py
 test/test_users.py

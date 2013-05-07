@@ -47,13 +47,16 @@ VALUES = {
     'YKVAL_SERVERS': 'ykval',
     'YKVAL_CLIENT_ID': 'ykval_id',
     'YKVAL_CLIENT_SECRET': 'ykval_secret',
+    'ALLOW_EMPTY_PASSWORDS': 'allow_empty',
     'USE_HSM': 'use_hsm',
     'YHSM_DEVICE': 'yhsm_device',
     'CRYPT_CONTEXT': 'crypt_context',
     'REST_PATH': 'rest_path',
     #Client
     'CORE_URL': 'core_url',
-    'SECURITY_LEVEL': 'security_level'
+    'SECURITY_LEVEL': 'security_level',
+    'AUTO_PROVISION': 'auto_provision',
+    'YUBIKEY_IDENTIFICATION': 'yubikey_id'
 }
 
 

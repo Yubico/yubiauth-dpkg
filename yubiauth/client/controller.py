@@ -47,6 +47,20 @@ def requires_otp(user):
     return not (sl == 0 or (sl == 1 and count == 0))
 
 
+def authenticate_otp(user, otp):
+    if otp:
+        if settings['auto_provision'] and len(user.yubikeys) == 0:
+            if validate_otp(otp):
+                user.assign_yubikey(otp)
+                return True
+            else:
+                return False
+        else:
+            return user.validate_otp(otp)
+    else:
+        return not requires_otp(user)
+
+
 class Client(Controller):
     """
     Main class for accessing user data.
@@ -55,21 +69,30 @@ class Client(Controller):
         super(Client, self).__init__(session)
         self.auth = YubiAuth(session)
 
+    def _user_for_otp(self, otp):
+        if settings['yubikey_id']:
+            yubikey = self.auth.get_yubikey(otp[:-32])
+            if yubikey.enabled and len(yubikey.users) == 1:
+                return yubikey.users[0]
+        raise ValueError("Unable to locate user!")
+
     def authenticate(self, username, password, otp=None):
-        user = self.auth.get_user(username)
-        if not user.validate_password(password):
-            raise ValueError("Invalid credentials!")
-        if otp:
-            if not user.validate_otp(otp):
-                raise ValueError("Invalid credentials!")
-        elif requires_otp(user):
-            raise ValueError("Invalid credentials!")
-        return user
+        if not username and otp:
+            user = self._user_for_otp(otp)
+        else:
+            user = self.auth.get_user(username)
+        if user.validate_password(password):
+            if authenticate_otp(user, otp):
+                return user
+        else:
+            # Consume the OTP even if the password was incorrect.
+            validate_otp(otp)
+        raise ValueError("Invalid credentials!")
 
     def create_session(self, username, password, otp=None):
         user = self.authenticate(username, password, otp)
         prefix = otp[:-32] if otp else None
-        user_session = UserSession(username, prefix)
+        user_session = UserSession(user.name, prefix)
         self.session.add(user_session)
         # Prevent loading the user twice
         user_session._user = user
