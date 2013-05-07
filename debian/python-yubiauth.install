@@ -1,2 +1,2 @@
-yubiauth.conf /etc/yubico/yubiauth/
-debian/conf/apache.conf /etc/yubico/yubiauth/
+yubiauth.conf /etc/yubico/auth/
+debian/conf/apache.conf /etc/yubico/auth/

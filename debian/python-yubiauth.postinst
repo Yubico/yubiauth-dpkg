@@ -23,7 +23,7 @@ if [ "$dbc_dbtype" = "pgsql" ]; then
 	dbc_dbtype="postgresql"
 fi
 
-CONF_FILE="/etc/yubico/yubiauth/yubiauth.conf"
+CONF_FILE="/etc/yubico/auth/yubiauth.conf"
 CONF_STRING="$dbc_dbtype://$dbc_dbuser:$dbc_dbpass@$dbc_dbserver$dbc_dbport/$dbc_dbname"
 
 if ! `grep -q "^DATABASE_CONFIGURATION.*'$CONF_STRING'.*$" $CONF_FILE`; then
@@ -49,7 +49,7 @@ if [ -d /etc/apache2/conf.d ]; then
 
 	if [ ! -e /etc/apache2/conf.d/yubiauth.conf ]; then
 		#Symlink configuration
-		ln -s ../../yubico/yubiauth/apache.conf /etc/apache2/conf.d/yubiauth.conf
+		ln -s ../../yubico/auth/apache.conf /etc/apache2/conf.d/yubiauth.conf
 	fi
 fi
 
