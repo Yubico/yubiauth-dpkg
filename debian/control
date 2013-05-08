@@ -21,7 +21,9 @@ Depends: ${misc:Depends},
          dbconfig-common
 XB-Python-Version: ${python:Versions}
 Provides: ${python:Provides}
-Recommends: yhsm-daemon
+Recommends: yhsm-daemon,
+            apache2,
+            libapache2-mod-wsgi
 Description: User management system with YubiKey validation
  YubiAuth provides a user management system which can be used as a base for 
  other systems. It allows the creation of users, which can be authenticated by
