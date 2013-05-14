@@ -1,3 +1,26 @@
+2013-05-14  Dain Nilsson <dain@yubico.com>
+
+	* test/test_rest_api.py, yubiauth/core/rest.py: Added test for
+	renaming users.
+
+2013-05-14  Dain Nilsson <dain@yubico.com>
+
+	* NEWS: Updated NEWS for release.
+
+2013-05-14  Dain Nilsson <dain@yubico.com>
+
+	* yubiauth/core/rest.py: Added renaming of users to core REST
+	interface.
+
+2013-05-13  Dain Nilsson <dain@yubico.com>
+
+	* NEWS, setup.py: Bump version
+
+2013-05-13  Dain Nilsson <dain@yubico.com>
+
+	* yubiauth/core/model.py: Delete binding if User or YubiKey is
+	deleted.
+
 2013-05-07  Dain Nilsson <dain@yubico.com>
 
 	* test/test_client_api.py: Updated test.
