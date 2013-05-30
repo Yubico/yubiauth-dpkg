@@ -51,12 +51,13 @@ VALUES = {
     'USE_HSM': 'use_hsm',
     'YHSM_DEVICE': 'yhsm_device',
     'CRYPT_CONTEXT': 'crypt_context',
-    'REST_PATH': 'rest_path',
     #Client
     'CORE_URL': 'core_url',
     'SECURITY_LEVEL': 'security_level',
     'AUTO_PROVISION': 'auto_provision',
-    'YUBIKEY_IDENTIFICATION': 'yubikey_id'
+    'YUBIKEY_IDENTIFICATION': 'yubikey_id',
+    'ENABLE_USER_REGISTRATION': 'registration',
+    'BEAKER': 'beaker'
 }
 
 
@@ -82,7 +83,8 @@ except IOError, e:
 finally:
     sys.dont_write_bytecode = dont_write_bytecode
 
-settings['rest_path'] = settings['rest_path'].strip('/')
+if not 'session.url' in settings['beaker']:
+    settings['beaker']['session.url'] = settings['db']
 
 if not 'YHSM_DEVICE' in os.environ and 'yhsm_device' in settings:
     #The environment variable is the one that is actually used.

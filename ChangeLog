@@ -1,3 +1,138 @@
+2013-05-30  Dain Nilsson <dain@yubico.com>
+
+	* NEWS, setup.py: Updated NEWS and setup.py for release.
+
+2013-05-30  Dain Nilsson <dain@yubico.com>
+
+	* yubiauth/client/controller.py, yubiauth/client/rest.py,
+	yubiauth/client/templates/created.html,
+	yubiauth/client/templates/form.html,
+	yubiauth/client/templates/logged_in.html,
+	yubiauth/client/templates/login.html,
+	yubiauth/client/templates/reauthenticate.html,
+	yubiauth/client/templates/register.html,
+	yubiauth/client/templates/revocation_code.html,
+	yubiauth/client/templates/revoke.html,
+	yubiauth/client/templates/status.html,
+	yubiauth/client/templates/yubikey.html, yubiauth/client/web.py: 
+	Improved UI.
+
+2013-05-29  Dain Nilsson <dain@yubico.com>
+
+	* yubiauth/client/rest.py,
+	yubiauth/client/templates/reauthenticate.html,
+	yubiauth/client/templates/status.html,
+	yubiauth/client/templates/yubikey.html, yubiauth/client/web.py,
+	yubiauth/core/rest.py, yubiauth/util/__init__.py,
+	yubiauth/util/utils.py: Add enable/disable YubiKeys to UI.
+
+2013-05-29  Dain Nilsson <dain@yubico.com>
+
+	* MANIFEST.in, yubiauth/ui/__init__.py: Fix MANIFEST.
+
+2013-05-29  Dain Nilsson <dain@yubico.com>
+
+	* setup.py: Cleaned up dependencies.
+
+2013-05-29  Dain Nilsson <dain@yubico.com>
+
+	* yubiauth/client/templates/change_password.html,
+	yubiauth/client/templates/created.html,
+	yubiauth/client/templates/session_required.html,
+	yubiauth/client/templates/status.html, yubiauth/client/web.py: Add
+	change password to UI.
+
+2013-05-29  Dain Nilsson <dain@yubico.com>
+
+	* yubiauth/client/rest.py,
+	yubiauth/client/templates/assign_yubikey.html,
+	yubiauth/client/templates/session_required.html,
+	yubiauth/client/templates/status.html, yubiauth/client/web.py: Added
+	Assign YubiKey to UI.
+
+2013-05-23  Dain Nilsson <dain@yubico.com>
+
+	* test/test_client_api.py, test/test_rest_api.py: Fixed tests.
+
+2013-05-23  Dain Nilsson <dain@yubico.com>
+
+	* setup.py: Added new deps.
+
+2013-05-23  Dain Nilsson <dain@yubico.com>
+
+	* NEWS: Updated NEWS.
+
+2013-05-23  Dain Nilsson <dain@yubico.com>
+
+	* yubiauth/client/templates/logged_in.html,
+	yubiauth/client/templates/status.html, yubiauth/client/web.py: Show
+	logged in user.
+
+2013-05-23  Dain Nilsson <dain@yubico.com>
+
+	* yubiauth/client/controller.py, yubiauth/client/rest.py,
+	yubiauth/client/templates/created.html,
+	yubiauth/client/templates/login.html,
+	yubiauth/client/templates/register.html, yubiauth/client/web.py,
+	yubiauth/config.py, yubiauth/default_settings.py: User registration.
+
+2013-05-22  Dain Nilsson <dain@yubico.com>
+
+	* yubiauth/client/templates/base.html,
+	yubiauth/client/templates/login.html,
+	yubiauth/client/templates/status.html, yubiauth/client/web.py: More
+	work on web.
+
+2013-05-22  Dain Nilsson <dain@yubico.com>
+
+	* yubiauth/client/templates/base.html,
+	yubiauth/client/templates/form.html,
+	yubiauth/client/templates/layout.html,
+	yubiauth/client/templates/login.html, yubiauth/client/web.py,
+	yubiauth/rest.py, yubiauth/ui/templates/base.html,
+	yubiauth/ui/templates/form.html, yubiauth/ui/templates/layout.html,
+	yubiauth/ui/templates/login.html, yubiauth/ui/web.py: Moved ui.web
+	to client.web.
+
+2013-05-22  Dain Nilsson <dain@yubico.com>
+
+	* yubiauth/client/controller.py, yubiauth/client/model.py,
+	yubiauth/client/rest.py, yubiauth/config.py, yubiauth/core/rest.py,
+	yubiauth/default_settings.py, yubiauth/rest.py,
+	yubiauth/util/controller.py, yubiauth/util/rest.py: Moved to beaker
+	for sessions.
+
+2013-05-21  Dain Nilsson <dain@yubico.com>
+
+	* yubiauth/client/controller.py, yubiauth/client/model.py,
+	yubiauth/client/rest.py, yubiauth/rest.py,
+	yubiauth/static/css/bootstrap-responsive.css,
+	yubiauth/static/css/bootstrap-responsive.min.css,
+	yubiauth/static/css/bootstrap.css,
+	yubiauth/static/css/bootstrap.min.css,
+	yubiauth/static/css/main.css, yubiauth/static/js/main.js,
+	yubiauth/static/js/vendor/bootstrap.js,
+	yubiauth/static/js/vendor/bootstrap.min.js,
+	yubiauth/static/js/vendor/jquery-1.9.1.min.js,
+	yubiauth/static/js/vendor/modernizr-2.6.2-respond-1.1.0.min.js,
+	yubiauth/ui/__init__.py, yubiauth/ui/templates/base.html,
+	yubiauth/ui/templates/form.html, yubiauth/ui/templates/layout.html,
+	yubiauth/ui/templates/login.html, yubiauth/ui/web.py,
+	yubiauth/util/model.py, yubiauth/util/static.py: Begun adding ui.
+
+2013-05-20  Dain Nilsson <dain@yubico.com>
+
+	* yubiauth/client/rest.py: Only generate revocation codes for POST.
+
+2013-05-20  Dain Nilsson <dain@yubico.com>
+
+	* NEWS, setup.py: Bumped version
+
+2013-05-20  Dain Nilsson <dain@yubico.com>
+
+	* MANIFEST.in, examples/rlm_yubiauth.pl: Added exmaples/ with
+	rlm_yubiauth.pl
+
 2013-05-17  Dain Nilsson <dain@yubico.com>
 
 	* NEWS: Updated NEWS for release.

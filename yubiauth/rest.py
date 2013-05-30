@@ -27,26 +27,44 @@
 # POSSIBILITY OF SUCH DAMAGE.
 #
 
+import os
 from wsgiref.simple_server import make_server
 from webob import exc
 from webob.dec import wsgify
 
-from yubiauth.core.rest import application as core_api
-from yubiauth.client.rest import application as client_api
+from yubiauth.core.rest import application as core_rest
+from yubiauth.client.rest import application as client_rest
+from yubiauth.client.web import application as client_web
+from yubiauth.util.static import DirectoryApp, FileApp
+
+STATIC_ASSETS = ['js', 'css', 'img', 'favicon.ico']
 
 
 class YubiAuthAPI(object):
     def __init__(self):
-        self._apis = [
-            core_api,
-            client_api
-        ]
+        base_dir = os.path.dirname(__file__)
+        static_dir = os.path.join(base_dir, 'static')
+        static_app = DirectoryApp(static_dir)
+        favicon_app = FileApp(os.path.join(static_dir, 'favicon.ico'))
+
+        self._apps = {
+            'core': core_rest,
+            'client': client_rest,
+            'ui': client_web,
+            'static': static_app,
+            'favicon.ico': favicon_app
+        }
 
     @wsgify
     def __call__(self, request):
-        for api in self._apis:
-            if request.path.startswith(api._base_path):
-                return api(request)
+        base_path = request.environ.get('BASE_PATH', '/')
+        if not request.script_name and request.path_info.startswith(base_path):
+            request.script_name = base_path
+            request.path_info = request.path_info[len(base_path):]
+
+        app_key = request.path_info_pop()
+        if app_key in self._apps:
+            return request.get_response(self._apps[app_key])
 
         raise exc.HTTPNotFound
 
