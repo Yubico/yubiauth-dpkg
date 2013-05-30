@@ -1,5 +1,10 @@
 2013-05-30  Dain Nilsson <dain@yubico.com>
 
+	* NEWS, setup.py: include_package_data = True to install static and
+	templates.
+
+2013-05-30  Dain Nilsson <dain@yubico.com>
+
 	* NEWS, setup.py: Updated NEWS and setup.py for release.
 
 2013-05-30  Dain Nilsson <dain@yubico.com>
