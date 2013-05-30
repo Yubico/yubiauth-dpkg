@@ -1,0 +1,29 @@
+{% extends "logged_in.html" %}
+
+{% block title %}Status{% endblock %}
+
+{% block content %}
+{{ super() }}
+
+<h2>YubiKeys</h2>
+
+{% if user.yubikeys %}
+<ul>
+	{% for prefix, yubikey in user.yubikeys.iteritems() %}
+	<li><a href="yubikey/{{ prefix }}">{{ prefix }}</a> - {% if yubikey.enabled %}Enabled{% else %}Disabled{% endif %}</li>
+	{% endfor %}
+</ul>
+{% else %}
+<p>You have no YubiKeys assigned.</p>
+{% endif %}
+
+<form action="assign_yubikey?noauth" method="post" class="form-inline">
+	<label for="yubikey">Assign a new YubiKey to your account</label><br />
+	<input id="yubikey" type="text" name="yubikey" class="span4" placeholder="Enter OTP from new YubiKey" />
+	<input type="submit" class="btn" value="Assign" />
+</form>
+
+<a href="change_password" class="btn">Change password</a>
+<a href="delete_account" class="btn">Delete account</a>
+
+{% endblock %}

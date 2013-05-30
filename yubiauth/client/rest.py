@@ -27,12 +27,22 @@
 # POSSIBILITY OF SUCH DAMAGE.
 #
 
+__all__ = [
+    'session_api',
+    'require_session',
+    'ClientAPI',
+    'application',
+]
+
 from wsgiref.simple_server import make_server
+from webob import exc
+from webob.dec import wsgify
+from beaker.middleware import SessionMiddleware
+from yubiauth.client import Client
 from yubiauth.util import validate_otp
 from yubiauth.util.rest import (REST_API, Route, json_response, json_error,
                                 extract_params)
 from yubiauth import settings
-from yubiauth.client.controller import Client
 
 import logging as log
 
@@ -41,95 +51,116 @@ SESSION_HEADER = 'X-%s' % SESSION_COOKIE
 REVOKE_ATTRIBUTE = '_REVOKE'
 
 
-def require_session(func):
-    def inner(self, request, *args, **kwargs):
-        if not request.session:
-            return json_error('Session required!')
+@wsgify.middleware
+def ClientMiddleware(request, app):
+    # Allow the session ID to be provided as a header or cookie.
+    if not SESSION_COOKIE in request.cookies and \
+            SESSION_HEADER in request.headers:
+        request.cookies[SESSION_COOKIE] = request.headers[SESSION_HEADER]
+    if 'yubiauth.client' in request.environ:
+        return app
+    try:
+        with Client() as client:
+            request.environ['yubiauth.client'] = client
+            response = request.get_response(app)
+    finally:
+        del request.environ['yubiauth.client']
+    return response
 
-        return func(self, request, *args, **kwargs)
-    return inner
+
+def session_api(app):
+    return ClientMiddleware(SessionMiddleware(app, settings['beaker']))
+
+
+def require_session(func=None, **kwargs):
+    """
+    Used to decorate a method on a REST_API to ensure that the user has
+    a valid UserSession when entering the method. If not, an error will be
+    returned.
+
+    To customize the error, override the session_required method of the api,
+    or pass an explicit error handler to the decorator.
+
+    This decorator expects a valid beaker.session and yubiauth.client in the
+    environ. In turn, it provides a User object as yubiauth.user.
+    """
+
+    error_handler = kwargs.get('error_handler', None)
+
+    def inner(func):
+        def new_func(self, request, *args, **kwargs):
+            try:
+                session = request.environ['beaker.session']
+                client = request.environ['yubiauth.client']
+                user_id = session.get('user_id', None)
+                request.environ['yubiauth.user'] = \
+                    client.auth.get_user(user_id)
+            except Exception, e:
+                log.warn(e)
+                if error_handler:
+                    return error_handler(request, e)
+                elif hasattr(self, 'session_required'):
+                    return self.session_required(request, e)
+                else:
+                    raise exc.HTTPBadRequest(detail='Session required!')
+            return func(self, request, *args, **kwargs)
+        return new_func
+    # If func is not defined, the decorator was called with parentheses.
+    return inner(func) if func else inner
 
 
 class ClientAPI(REST_API):
     __routes__ = [
-        Route(r'^login$', 'login'),
-        Route(r'^authenticate$', 'authenticate'),
-        Route(r'^logout$', 'logout'),
-        Route(r'^status$', 'status'),
-        Route(r'^password$', post='change_password'),
-        Route(r'^yubikey$', post='assign_yubikey'),
-        Route(r'^revoke/generate$', 'generate_revocation'),
-        Route(r'^revoke$', post='revoke_yubikey')
+        Route(r'^/login$', 'login'),
+        Route(r'^/authenticate$', 'authenticate'),
+        Route(r'^/logout$', 'logout'),
+        Route(r'^/status$', 'status'),
+        Route(r'^/password$', post='change_password'),
+        Route(r'^/yubikey$', post='assign_yubikey'),
+        Route(r'^/revoke/generate$', post='generate_revocation'),
+        Route(r'^/revoke$', post='revoke_yubikey')
     ]
 
-    def _call_setup(self, request):
-        request.client = Client()
-        request.session = None
-        if SESSION_COOKIE in request.cookies:
-            sessionId = request.cookies[SESSION_COOKIE]
-        elif SESSION_HEADER in request.headers:
-            sessionId = request.headers[SESSION_HEADER]
-
-        try:
-            request.session = request.client.get_session(sessionId)
-        except:
-            pass
-
-    def _call_teardown(self, request, response):
-        try:
-            if request.session:
-                sessionId = str(request.session.sessionId)
-                # TODO: Roll session key?
-                if SESSION_COOKIE in request.cookies and \
-                        request.cookies[SESSION_COOKIE] == sessionId:
-                    return
-                https = request.scheme == 'https'
-                response.set_cookie(SESSION_COOKIE, sessionId,
-                                    secure=https, httponly=True)
-                response.headers[SESSION_HEADER] = sessionId
-            elif SESSION_COOKIE in request.cookies:
-                response.set_cookie(SESSION_COOKIE, None)
-        finally:
-            request.client.commit()
-            del request.client
+    def session_required(self, request, e):
+        return json_error('Session required!')
 
     @extract_params('username?', 'password?', 'otp?')
     def authenticate(self, request, username=None, password=None, otp=None):
         try:
-            request.client.authenticate(username, password, otp)
+            client = request.environ['yubiauth.client']
+            client.authenticate(username, password, otp)
             return json_response(True)
         except:
             return json_response(False, status=400)
 
     @extract_params('username?', 'password?', 'otp?')
     def login(self, request, username=None, password=None, otp=None):
+        client = request.environ['yubiauth.client']
         try:
-            session = request.client.create_session(username, password, otp)
-            request.session = session
+            session = client.create_session(username, password, otp)
+            request.environ['beaker.session'].update(session)
+            session.delete()
             return json_response(True)
-        except Exception as e:
+        except Exception, e:
             log.warn(e)
-            if request.session:
-                request.session.delete()
-                request.session = None
             return json_error('Invalid credentials!')
 
     @require_session
     def logout(self, request):
-        request.session.delete()
-        request.session = None
+        request.environ['beaker.session'].delete()
         return json_response(True)
 
     @require_session
     def status(self, request):
-        return json_response(request.session.data)
+        return json_response(request.environ['beaker.session']._session())
 
     @require_session
     @extract_params('oldpass', 'newpass', 'otp?')
     def change_password(self, request, oldpass, newpass, otp=None):
-        user = request.session.user
+        client = request.environ['yubiauth.client']
+        user = request.environ['yubiauth.user']
         try:
-            request.client.authenticate(user.name, oldpass, otp)
+            client.authenticate(user.name, oldpass, otp)
             user.set_password(newpass)
             return json_response(True)
         except:
@@ -138,9 +169,10 @@ class ClientAPI(REST_API):
     @require_session
     @extract_params('yubikey', 'password', 'otp?')
     def assign_yubikey(self, request, yubikey, password, otp=None):
-        user = request.session.user
+        client = request.environ['yubiauth.client']
+        user = request.environ['yubiauth.user']
         try:
-            request.client.authenticate(user.name, password, otp)
+            client.authenticate(user.name, password, otp)
             prefix = yubikey[:-32]
             if not validate_otp(yubikey):
                 return json_error('Invalid OTP for new YubiKey!')
@@ -151,24 +183,30 @@ class ClientAPI(REST_API):
             return json_error('Invalid credentials!')
 
     @require_session
-    @extract_params('otp')
-    def generate_revocation(self, request, otp):
-        user = request.session.user
-        if not user.validate_otp(otp):
+    @extract_params('yubikey', 'password', 'otp?')
+    def generate_revocation(self, request, yubikey, password, otp=None):
+        client = request.environ['yubiauth.client']
+        user = request.environ['yubiauth.user']
+        try:
+            client.authenticate(user.name, password, otp)
+            if not user.validate_otp(otp):
+                return json_error('Invalid credentials!')
+            code = client.generate_revocation(otp[:-32])
+            return json_response(code)
+        except:
             return json_error('Invalid credentials!')
-        code = request.client.generate_revocation(otp[:-32])
-        return json_response(code)
 
     @extract_params('code')
     def revoke_yubikey(self, request, code):
+        client = request.environ['yubiauth.client']
         try:
-            self.client.revoke(code)
+            client.revoke(code)
             return json_response(True)
         except:
             return json_error('Invalid code!')
 
 
-application = ClientAPI('/%s/client' % settings['rest_path'])
+application = session_api(ClientAPI())
 
 if __name__ == '__main__':
     httpd = make_server('localhost', 8080, application)
