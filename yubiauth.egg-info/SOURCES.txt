@@ -38,12 +38,12 @@ yubiauth/client/templates/form.html
 yubiauth/client/templates/layout.html
 yubiauth/client/templates/logged_in.html
 yubiauth/client/templates/login.html
+yubiauth/client/templates/manage.html
 yubiauth/client/templates/reauthenticate.html
 yubiauth/client/templates/register.html
 yubiauth/client/templates/revocation_code.html
 yubiauth/client/templates/revoke.html
 yubiauth/client/templates/session_required.html
-yubiauth/client/templates/status.html
 yubiauth/client/templates/yubikey.html
 yubiauth/core/__init__.py
 yubiauth/core/controller.py
