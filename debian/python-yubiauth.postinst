@@ -28,7 +28,7 @@ CONF_STRING="$dbc_dbtype://$dbc_dbuser:$dbc_dbpass@$dbc_dbserver$dbc_dbport/$dbc
 
 if ! `grep -q "^DATABASE_CONFIGURATION.*'$CONF_STRING'.*$" $CONF_FILE`; then
 	#Comment out any existing configuration
-	sed -i 's/DATABASE_CONFIGURATION/#DATABASE_CONFIGURATION/g' $CONF_FILE
+	sed -i 's/^DATABASE_CONFIGURATION/#DATABASE_CONFIGURATION/g' $CONF_FILE
 
 	#Write new configuration
 	{ echo ""; echo "#dbconfig-common generated connection string:"; \
