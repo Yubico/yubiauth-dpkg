@@ -1,3 +1,67 @@
+2013-06-04  Dain Nilsson <dain@yubico.com>
+
+	* NEWS: Updated NEWS for release.
+
+2013-06-04  Dain Nilsson <dain@yubico.com>
+
+	* yubiauth/client/controller.py, yubiauth/client/rest.py,
+	yubiauth/client/web.py, yubiauth/core/controller.py: More logging
+	fixes.
+
+2013-06-04  Dain Nilsson <dain@yubico.com>
+
+	* yubiauth/client/controller.py, yubiauth/client/rest.py,
+	yubiauth/client/web.py, yubiauth/core/controller.py: Improved
+	logging.
+
+2013-06-04  Dain Nilsson <dain@yubico.com>
+
+	* yubiauth/rest.py, yubiauth/server.py: Renamed yubiauth/rest to
+	yubiauth/server and increased logging.
+
+2013-06-04  Dain Nilsson <dain@yubico.com>
+
+	* yubiauth/client/controller.py, yubiauth/client/rest.py,
+	yubiauth/core/controller.py: Improved logging.
+
+2013-06-04  Dain Nilsson <dain@yubico.com>
+
+	* README, setup.py: Moved into beta.
+
+2013-05-31  Dain Nilsson <dain@yubico.com>
+
+	* test/test_client_api.py, yubiauth/client/rest.py: Let header take
+	precedence over cookie for sessions.
+
+2013-05-31  Dain Nilsson <dain@yubico.com>
+
+	* yubiauth/client/web.py: Made username and password optional for
+	login if settings permit.
+
+2013-05-31  Dain Nilsson <dain@yubico.com>
+
+	* test/test_client_api.py: Fix test.
+
+2013-05-31  Dain Nilsson <dain@yubico.com>
+
+	* NEWS, test/test_client_api.py, test/test_users.py: Test header
+	authentication.
+
+2013-05-31  Dain Nilsson <dain@yubico.com>
+
+	* yubiauth/core/controller.py: Check for Integral type instead of
+	int to support longs.
+
+2013-05-30  Dain Nilsson <dain@yubico.com>
+
+	* NEWS, setup.py: Bumped version
+
+2013-05-30  Dain Nilsson <dain@yubico.com>
+
+	* yubiauth/client/templates/base.html,
+	yubiauth/client/templates/revocation_code.html,
+	yubiauth/client/templates/revoke.html: minor template changes
+
 2013-05-30  Dain Nilsson <dain@yubico.com>
 
 	* NEWS, setup.py: include_package_data = True to install static and

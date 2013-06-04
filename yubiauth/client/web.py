@@ -45,7 +45,8 @@ from yubiauth.client.rest import session_api, require_session
 from yubiauth.client.controller import requires_otp
 
 import os
-import logging as log
+import logging
+log = logging.getLogger(__name__)
 
 base_dir = os.path.dirname(__file__)
 template_dir = os.path.join(base_dir, 'templates')
@@ -69,8 +70,11 @@ def with_yubikey(func):
 
 
 class LoginForm(Form):
-    username = TextField('Username', [Required()])
-    password = PasswordField('Password', [Required()])
+    username = TextField('Username', [Optional() if settings['yubikey_id']
+                                      else Required()])
+    password = PasswordField('Password', [Optional() if
+                                          settings['allow_empty'] else
+                                          Required()])
     yubikey = TextField('YubiKey', [Optional(), Regexp(YUBIKEY_OTP)])
 
 
@@ -308,7 +312,7 @@ class ClientUI(REST_API):
         auth_form = ReauthenticateForm(request, yubikey.prefix)
         if request.method == 'POST' and auth_form.validate():
             user = request.environ['yubiauth.user']
-            #Validate otp manually as the YubiKey might be disabled
+            # Validate otp manually as the YubiKey might be disabled
             if user.validate_password(auth_form.password.data) and \
                     validate_otp(auth_form.otp.data):
                 yubikey.enabled = enabled
