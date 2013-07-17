@@ -1,3 +1,16 @@
+2013-07-17  Dain Nilsson <dain@yubico.com>
+
+	* NEWS: Updated NEWS.
+
+2013-07-15  Dain Nilsson <dain@yubico.com>
+
+	* NEWS, setup.py, test/test_rest_api.py, yubiauth/core/model.py: 
+	Made attribute values unbounded.
+
+2013-06-12  Dain Nilsson <dain@yubico.com>
+
+	* examples/http_basic_auth.py: Added HTTP BASIC auth example.
+
 2013-06-04  Dain Nilsson <dain@yubico.com>
 
 	* NEWS: Updated NEWS for release.
