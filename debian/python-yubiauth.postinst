@@ -38,14 +38,19 @@ fi
 #Create the DB tables
 python -c "from yubiauth import create_tables; create_tables()" || true
 
+#Create empty log file, for sake of permissions
+LOG_FILE="/var/log/yubiauth.log"
+touch $LOG_FILE
+
 #Fix permissions
-chmod 0600 $CONF_FILE
+chmod 0600 $CONF_FILE $LOG_FILE
 
 #Apache configuration
 if [ -d /etc/apache2/conf.d ]; then
 	#Alter permissions for apache
-	chown root:www-data $CONF_FILE
+	chown root:www-data $CONF_FILE $LOG_FILE
 	chmod g+r $CONF_FILE
+	chmod g+rw $LOG_FILE
 
 	if [ ! -e /etc/apache2/conf.d/yubiauth.conf ]; then
 		#Symlink configuration

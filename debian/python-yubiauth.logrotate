@@ -1,0 +1,8 @@
+/var/log/yubiauth.log {
+	rotate 12
+	weekly
+	compress
+	missingok
+	notifempty
+	create
+}
