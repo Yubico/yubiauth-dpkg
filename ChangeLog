@@ -1,3 +1,27 @@
+2013-07-19  Dain Nilsson <dain@yubico.com>
+
+	* NEWS: Updated NEWS for release.
+
+2013-07-19  Dain Nilsson <dain@yubico.com>
+
+	* yubiauth/client/controller.py: Improved logging for client
+	controller.
+
+2013-07-19  Dain Nilsson <dain@yubico.com>
+
+	* MANIFEST.in, conf/logging.conf, setup.py: Added standard
+	logging.conf
+
+2013-07-19  Dain Nilsson <dain@yubico.com>
+
+	* NEWS, setup.py: Bumped version.
+
+2013-07-19  Dain Nilsson <dain@yubico.com>
+
+	* yubiauth/__init__.py, yubiauth/client/rest.py,
+	yubiauth/client/web.py, yubiauth/config.py,
+	yubiauth/core/controller.py: Improved logging.
+
 2013-07-17  Dain Nilsson <dain@yubico.com>
 
 	* NEWS: Updated NEWS.

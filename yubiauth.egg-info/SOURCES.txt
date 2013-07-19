@@ -6,6 +6,7 @@ README
 release.py
 setup.cfg
 setup.py
+conf/logging.conf
 doc/Home.md
 doc/Rest-API.md
 doc/YubiHSM-Setup.md
