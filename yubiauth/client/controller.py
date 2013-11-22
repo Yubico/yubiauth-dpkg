@@ -33,6 +33,7 @@ from yubiauth.util.controller import Controller
 from yubiauth.util.model import Session
 from yubiauth.client.model import AttributeType, PERMS
 from beaker.session import Session as UserSession
+from functools import partial
 import uuid
 import base64
 import logging
@@ -45,6 +46,12 @@ __all__ = [
 
 REVOKE_KEY = '_revoke'
 
+
+if settings['use_ldap'] and settings['ldap_auto_import']:
+    from yubiauth.core.ldapauth import LDAPAuthenticator
+    global ldapauth
+    ldapauth = LDAPAuthenticator(settings['ldap_server'],
+                                 settings['ldap_bind_dn'])
 
 def requires_otp(user):
     sl = settings['security_level']
@@ -73,6 +80,7 @@ session_config['use_cookies'] = False
 
 
 class Client(Controller):
+
     """
     Main class for accessing user data.
     """
@@ -93,9 +101,14 @@ class Client(Controller):
                 user = self._user_for_otp(otp)
             else:
                 user = self.auth.get_user(username)
-        except Exception, e:
-            log.info('Authentication failed. No such user: %s', username)
-            raise e
+        except Exception as e:
+            if settings['use_ldap'] and settings['ldap_auto_import'] \
+                    and ldapauth.authenticate(username, password):
+                user = self.auth.create_user(username, None)
+                user.attributes['_ldap_auto_imported'] = True
+            else:
+                log.info('Authentication failed. No such user: %s', username)
+                raise e
 
         if user.validate_password(password):
             pw = 'valid password' if password else 'None (valid)'

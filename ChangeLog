@@ -1,3 +1,58 @@
+2013-11-22  Dain Nilsson <dain@yubico.com>
+
+	* yubiauth/default_settings.py: Default to dc=example,dc=com for
+	LDAP.
+
+2013-11-22  Dain Nilsson <dain@yubico.com>
+
+	* NEWS: Updated NEWS for release.
+
+2013-11-22  Dain Nilsson <dain@yubico.com>
+
+	* doc: Updated documentation.
+
+2013-11-22  Dain Nilsson <dain@yubico.com>
+
+	* setup.py: whoops.
+
+2013-11-22  Dain Nilsson <dain@yubico.com>
+
+	* setup.py: Use python3-ldap for Python 3 (untested).
+
+2013-11-22  Dain Nilsson <dain@yubico.com>
+
+	* setup.py: Added python-ldap dependency.
+
+2013-11-21  Dain Nilsson <dain@yubico.com>
+
+	* yubiauth/core/model.py, yubiauth/default_settings.py: Raise
+	exception on set_password if LDAP is used.
+
+2013-11-20  Dain Nilsson <dain@yubico.com>
+
+	* yubiauth/default_settings.py: Added comment about finding the Bind
+	DN for AD.
+
+2013-11-20  Dain Nilsson <dain@yubico.com>
+
+	* yubiauth/core/ldapauth.py: Set timeout for LDAP to 10 seconds.
+
+2013-11-20  Dain Nilsson <dain@yubico.com>
+
+	* yubiauth/client/controller.py, yubiauth/client/ldapauth.py,
+	yubiauth/core/ldapauth.py, yubiauth/core/model.py,
+	yubiauth/default_settings.py: Improved LDAP support.
+
+2013-11-20  Dain Nilsson <dain@yubico.com>
+
+	* NEWS, setup.py: Updated version and NEWS.
+
+2013-11-20  Dain Nilsson <dain@yubico.com>
+
+	* yubiauth/client/controller.py, yubiauth/client/ldapauth.py,
+	yubiauth/config.py, yubiauth/default_settings.py: Added
+	authentication through LDAP bind.
+
 2013-07-19  Dain Nilsson <dain@yubico.com>
 
 	* NEWS: Updated NEWS for release.

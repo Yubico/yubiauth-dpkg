@@ -49,6 +49,12 @@ from sqlalchemy.ext.associationproxy import association_proxy
 from passlib.context import CryptContext
 from passlib.registry import register_crypt_handler_path
 
+if settings['use_ldap']:
+    from yubiauth.core.ldapauth import LDAPAuthenticator
+    global ldapauth
+    ldapauth = LDAPAuthenticator(settings['ldap_server'],
+                                 settings['ldap_bind_dn'])
+
 if settings['use_hsm']:
     register_crypt_handler_path('yhsm_pbkdf2_sha1', 'yubiauth.yhsm')
     register_crypt_handler_path('yhsm_pbkdf2_sha256', 'yubiauth.yhsm')
@@ -277,6 +283,9 @@ class User(AttributeHolder, Deletable, Base):
         @param password: The new password to set for the user.
         @type password: string
         """
+        if settings['use_ldap']:
+            raise ValueError("Cannot set password when using LDAP")
+
         if password:
             self.auth = pwd_context.encrypt(password)
         else:
@@ -292,6 +301,9 @@ class User(AttributeHolder, Deletable, Base):
         @return: True if the password was valid, False if not.
         @rtype bool
         """
+        if settings['use_ldap']:
+            return ldapauth.authenticate(self.name, password)
+
         if not password:
             return settings['allow_empty'] is True
 
