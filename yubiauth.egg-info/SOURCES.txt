@@ -8,6 +8,7 @@ setup.cfg
 setup.py
 conf/logging.conf
 doc/Home.md
+doc/LDAP-Setup.md
 doc/Rest-API.md
 doc/YubiHSM-Setup.md
 examples/http_basic_auth.py
@@ -49,6 +50,7 @@ yubiauth/client/templates/session_required.html
 yubiauth/client/templates/yubikey.html
 yubiauth/core/__init__.py
 yubiauth/core/controller.py
+yubiauth/core/ldapauth.py
 yubiauth/core/model.py
 yubiauth/core/rest.py
 yubiauth/static/apple-touch-icon-114x114-precomposed.png
