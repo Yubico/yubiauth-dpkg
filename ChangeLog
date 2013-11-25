@@ -1,3 +1,12 @@
+2013-11-25  Dain Nilsson <dain@yubico.com>
+
+	* NEWS, setup.py: Updated NEWS and version for release.
+
+2013-11-25  Dain Nilsson <dain@yubico.com>
+
+	* yubiauth/client/controller.py, yubiauth/core/model.py: Fixed
+	auto-creating LDAP users.
+
 2013-11-22  Dain Nilsson <dain@yubico.com>
 
 	* yubiauth/default_settings.py: Default to dc=example,dc=com for
