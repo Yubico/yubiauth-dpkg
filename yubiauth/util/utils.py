@@ -33,20 +33,32 @@ __all__ = [
 ]
 
 from yubiauth.config import settings
-from yubico_client import Yubico
+from yubico_client import Yubico, __version__ as version
 from yubico_client import yubico as yubico_constants
 
 
-# TODO: Pass these URLs to Yubico instead.
-use_https = all(url.startswith('https://') for url in settings['ykval'])
-yubico_constants.API_URLS = [url[8:] if url.startswith('https://') else
-                             url[7:] if url.startswith('http://') else
-                             url for url in settings['ykval']]
-yubico = Yubico(settings['ykval_id'], settings['ykval_secret'],
-                use_https=use_https)
+kwargs = {}
 
+urls_no_proto = [url[8:] if url.startswith('https://') else
+                 url[7:] if url.startswith('http://') else
+                 url for url in settings['ykval']]
+use_https = all(url.startswith('https://') for url in settings['ykval'])
+
+if version < (1, 8, 0):  # No URL passing, except through hack.
+    yubico_constants.API_URLS = urls_no_proto
+elif version < (1, 9, 0):  # 1.8.0 introduces URL passing, without protocol.
+    kwargs['api_urls'] = urls_no_proto
+else:  # 1.9.0 or later
+    kwargs['api_urls'] = settings['ykval']
+
+if version < (1, 9, 0):  # 1.9.0 removes use_https parameter.
+    kwargs['use_https'] = use_https
+
+
+yubico = Yubico(settings['ykval_id'], settings['ykval_secret'], **kwargs)
 
 MODHEX = 'cbdefghijklnrtuv'
+
 
 def validate_otp(otp):
     try:

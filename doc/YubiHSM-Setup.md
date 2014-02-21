@@ -63,7 +63,7 @@ Once done, exit the configuration mode:
 
 	HSM> exit
 
-Now, remove the YubiHSM device and plug it into the YubiAuth server matchine
+Now, remove the YubiHSM device and plug it into the YubiAuth server machine
 (without pressing the configuration mode button). If the YubiHSM was
 configured with a master password and/or administrator YubiKeys, you will need
 to unlock the device as described in the manual (this needs to be done each

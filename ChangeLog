@@ -1,3 +1,45 @@
+2014-02-21  Dain Nilsson <dain@yubico.com>
+
+	* NEWS: Updated NEWS for release.
+
+2014-02-04  Dain Nilsson <dain@yubico.com>
+
+	* yubiauth/util/utils.py: Fixed yubico-client integration.
+
+2014-02-04  Dain Nilsson <dain@yubico.com>
+
+	* setup.py, yubiauth/__init__.py: Added __version__ to __init__.py
+
+2014-02-04  Dain Nilsson <dain@yubico.com>
+
+	* test/test_client_api.py: Fixed broken test.
+
+2014-02-04  Dain Nilsson <dain@yubico.com>
+
+	* .gitignore: Add *.egg to .gitignore.
+
+2014-02-04  Dain Nilsson <dain@yubico.com>
+
+	* yubiauth/util/utils.py: Fix for newer versions of
+	python-yubico-client.
+
+2014-02-04  Dain Nilsson <dain@yubico.com>
+
+	* doc: Updated documentation.
+
+2014-01-29  Dain Nilsson <dain@yubico.com>
+
+	* yubiauth/core/model.py: Fixed "allow empty passwords".
+
+2014-01-10  Dain Nilsson <dain@yubico.com>
+
+	* examples/dictionary.yubiauth, examples/rlm_yubiauth.pl: Updated
+	rlm_yubiauth.
+
+2013-11-26  Klas Lindfors <klas@yubico.com>
+
+	* BLURB: add BLURB
+
 2013-11-25  Dain Nilsson <dain@yubico.com>
 
 	* NEWS, setup.py: Updated NEWS and version for release.

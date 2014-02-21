@@ -11,6 +11,7 @@ doc/Home.md
 doc/LDAP-Setup.md
 doc/Rest-API.md
 doc/YubiHSM-Setup.md
+examples/dictionary.yubiauth
 examples/http_basic_auth.py
 examples/rlm_yubiauth.pl
 test/test_client_api.py

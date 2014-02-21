@@ -41,6 +41,12 @@ Note that while {user.name} can always be used to expand to the username,
 relying on other attributes may require that the user already exist in the
 YubiAuth database to work.
 
+Note that what is needed to authenticate the user here is the fully qualified
+DN, which might not include the actual username of the user. To connect a user
+of with an arbitrary username to a specific LDAP user, you can either use other
+user attributes in the template, or use the special attribute "_ldap_bind_dn"
+attribute which will override the LDAP_BIND_DN on a user level.
+
 Finally, there is an LDAP_AUTO_IMPORT setting which will automatically create
 a user in the YubiAuth database if the user tries to log in while LDAP is being
 used, and the user does not already exist in YubiAuth. This is only done once
