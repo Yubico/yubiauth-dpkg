@@ -46,7 +46,18 @@ touch $LOG_FILE
 chmod 0600 $CONF_FILE $LOG_FILE
 
 #Apache configuration
-if [ -d /etc/apache2/conf.d ]; then
+if [ -d /etc/apache2/conf-available ]; then  #Apache 2.4
+	#Alter permissions for apache
+	chown root:www-data $CONF_FILE $LOG_FILE
+	chmod g+r $CONF_FILE
+	chmod g+rw $LOG_FILE
+
+	if [ ! -e /etc/apache2/conf-available/yubiauth.conf ]; then
+		#Symlink configuration
+		ln -s ../../yubico/auth/apache-2.4.conf /etc/apache2/conf-available/yubiauth.conf
+		a2enconf yubiauth
+	fi
+elif [ -d /etc/apache2/conf.d ]; then  #Apache 2.2
 	#Alter permissions for apache
 	chown root:www-data $CONF_FILE $LOG_FILE
 	chmod g+r $CONF_FILE
@@ -54,7 +65,7 @@ if [ -d /etc/apache2/conf.d ]; then
 
 	if [ ! -e /etc/apache2/conf.d/yubiauth.conf ]; then
 		#Symlink configuration
-		ln -s ../../yubico/auth/apache.conf /etc/apache2/conf.d/yubiauth.conf
+		ln -s ../../yubico/auth/apache-2.2.conf /etc/apache2/conf.d/yubiauth.conf
 	fi
 fi
 
