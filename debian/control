@@ -7,7 +7,7 @@ Build-Depends: python-setuptools (>= 0.6b3),
                python-all (>= 2.6.6-3),
                debhelper (>= 8),
                python-nose,
-Standards-Version: 3.9.4
+Standards-Version: 3.9.5
 Homepage: https://github.com/Yubico/yubiauth
 Vcs-Browser: https://github.com/Yubico/yubiauth-dpkg
 Vcs-Git: git://github.com/Yubico/yubiauth-dpkg.git
