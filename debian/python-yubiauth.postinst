@@ -46,26 +46,28 @@ touch $LOG_FILE
 chmod 0600 $CONF_FILE $LOG_FILE
 
 #Apache configuration
-if [ -d /etc/apache2/conf-available ]; then  #Apache 2.4
+CONF="yubiauth"
+
+if [ -d /etc/apache2 ]; then
 	#Alter permissions for apache
 	chown root:www-data $CONF_FILE $LOG_FILE
 	chmod g+r $CONF_FILE
 	chmod g+rw $LOG_FILE
 
-	if [ ! -e /etc/apache2/conf-available/yubiauth.conf ]; then
-		#Symlink configuration
-		ln -s ../../yubico/auth/apache-2.4.conf /etc/apache2/conf-available/yubiauth.conf
-		a2enconf yubiauth
+	#Symlink apache configuration
+	if [ ! -e /etc/apache2/conf-available/$CONF.conf ]; then
+		mkdir -p /etc/apache2/conf-available
+		ln -s ../../yubico/auth/apache.conf /etc/apache2/conf-available/$CONF.conf
 	fi
-elif [ -d /etc/apache2/conf.d ]; then  #Apache 2.2
-	#Alter permissions for apache
-	chown root:www-data $CONF_FILE $LOG_FILE
-	chmod g+r $CONF_FILE
-	chmod g+rw $LOG_FILE
+fi
 
-	if [ ! -e /etc/apache2/conf.d/yubiauth.conf ]; then
-		#Symlink configuration
-		ln -s ../../yubico/auth/apache-2.2.conf /etc/apache2/conf.d/yubiauth.conf
+COMMON_STATE=$(dpkg-query -f '${Status}' -W 'apache2.2-common' 2>/dev/null | awk '{print $3}' || true)
+if [ -e /usr/share/apache2/apache2-maintscript-helper ] ; then
+	. /usr/share/apache2/apache2-maintscript-helper
+	apache2_invoke enconf $CONF || exit $?
+elif [ "$COMMON_STATE" = "installed" ] || [ "$COMMON_STATE" = "unpacked" ] ; then
+	if [ -d /etc/apache2/conf.d/ -a ! -L /etc/apache2/conf.d/$CONF.conf ]; then
+		ln -s ../../yubico/auth/apache.conf /etc/apache2/conf.d/$CONF.conf
 	fi
 fi
 

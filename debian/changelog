@@ -1,5 +1,5 @@
-python-yubiauth (0.3.8-3) unstable; urgency=low
+python-yubiauth (0.3.8-4) unstable; urgency=low
 
   * Initial release (closes #XXX)
 
- -- Dain Nilsson <dain@yubico.com>  Wed, 23 Apr 2014 08:43:03 +0200
+ -- Dain Nilsson <dain@yubico.com>  Fri, 25 Apr 2014 15:52:28 +0200
