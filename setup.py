@@ -34,7 +34,14 @@ import os
 import re
 from release import release
 
-tests_require = ['WebTest', 'mock']
+# This is needed for Travis to run the tests without errors.
+# See: http://bugs.python.org/issue15881#msg170215
+try:
+    import multiprocessing
+except ImportError:
+    pass
+
+tests_require = ['nose>=1.0', 'WebTest', 'mock']
 
 # Don't load custom settings (for tests, etc.)
 os.environ['YUBIAUTH_SETTINGS'] = '/dev/null'
@@ -68,7 +75,6 @@ setup(
     packages=['yubiauth', 'yubiauth.core', 'yubiauth.client', 'yubiauth.util'],
     include_package_data=True,
     data_files=[('/etc/yubico/auth', ['conf/logging.conf'])],
-    setup_requires=['nose>=1.0'],
     install_requires=['SQLAlchemy', 'WebOb', 'passlib', 'yubico-client',
                       'Beaker', 'Jinja2', 'WTForms', python_ldap],
     test_suite="nose.collector",

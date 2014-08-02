@@ -27,7 +27,7 @@
 # POSSIBILITY OF SUCH DAMAGE.
 #
 
-__version__ = '0.3.8'
+__version__ = '0.3.9'
 
 __all__ = [
     'YubiAuth',
@@ -35,7 +35,7 @@ __all__ = [
     'create_tables',
 ]
 
-from config import settings
+from yubiauth.config import settings
 from yubiauth.core.controller import YubiAuth
 
 from yubiauth.util.model import engine

@@ -67,7 +67,8 @@ VALUES = {
     'USE_LDAP': 'use_ldap',
     'LDAP_SERVER': 'ldap_server',
     'LDAP_BIND_DN': 'ldap_bind_dn',
-    'LDAP_AUTO_IMPORT': 'ldap_auto_import'
+    'LDAP_AUTO_IMPORT': 'ldap_auto_import',
+    'LDAP_YUBIKEY_ATTRIBUTE': 'ldap_yubikey_attr'
 }
 
 
@@ -87,7 +88,7 @@ try:
     sys.dont_write_bytecode = True
     user_settings = imp.load_source('user_settings', SETTINGS_FILE)
     settings = parse(user_settings, settings)
-except IOError, e:
+except IOError as e:
     if not e.errno in [errno.ENOENT, errno.EACCES]:
         raise e
 finally:
