@@ -1,3 +1,80 @@
+2014-08-02  Dain Nilsson <dain@yubico.com>
+
+	* NEWS, yubiauth/__init__.py: Updated NEWS for release.
+
+2014-06-26  Dain Nilsson <dain@yubico.com>
+
+	* yubiauth/core/rest.py: Return a 404 when trying to unbind a users
+	YubiKey that isn't bound.
+
+2014-06-24  Dain Nilsson <dain@yubico.com>
+
+	* .travis.yml: Removed Python 3 from Travis as yubico-client isn't
+	compatible.
+
+2014-06-24  Dain Nilsson <dain@yubico.com>
+
+	* yubiauth/core/__init__.py: Fix another relative import.
+
+2014-06-24  Dain Nilsson <dain@yubico.com>
+
+	* yubiauth/config.py: Fix catch to work on Python 3.
+
+2014-06-24  Dain Nilsson <dain@yubico.com>
+
+	* yubiauth/__init__.py: Fix relative import.
+
+2014-06-24  Dain Nilsson <dain@yubico.com>
+
+	* .travis.yml: More Travis stuff.
+
+2014-06-24  Dain Nilsson <dain@yubico.com>
+
+	* setup.py: Fix tests on Travis?
+
+2014-06-24  Dain Nilsson <dain@yubico.com>
+
+	* .travis.yml: Fix Travis?
+
+2014-06-24  Dain Nilsson <dain@yubico.com>
+
+	* setup.py: Only require nose for tests (fixes #12)
+
+2014-05-08  Simon Josefsson <simon@josefsson.org>
+
+	* : Merge pull request #3 from pamelia/master set pool_recycle to 1 hour
+
+2014-02-26  Dain Nilsson <dainzor@gmail.com>
+
+	* : Merge pull request #2 from Korrigan/master [FEATURE] Searching for yubikeys in LDAP
+
+2014-02-25  Matthieu Rosinski <korrigan@staff.42.fr>
+
+	* yubiauth/core/ldapauth.py: ldap scope changed for yubikey
+	attribute searching
+
+2014-02-25  Matthieu Rosinski <korrigan@staff.42.fr>
+
+	* yubiauth/client/controller.py, yubiauth/core/ldapauth.py,
+	yubiauth/core/model.py: correcting few implementation bugs for
+	ldap_yubikey_attr feature
+
+2014-02-25  Matthieu Rosinski <korrigan@staff.42.fr>
+
+	* yubiauth/client/controller.py, yubiauth/core/ldapauth.py,
+	yubiauth/core/model.py, yubiauth/core/rest.py: cleaned previous
+	commits, added ldap_yubikey_attr feature to client API
+
+2014-02-24  Matthieu Rosinski <korrigan@staff.42.fr>
+
+	* yubiauth/core/ldapauth.py, yubiauth/core/model.py,
+	yubiauth/core/rest.py: implemented yubikey from ldap
+
+2014-02-24  Matthieu Rosinski <korrigan@staff.42.fr>
+
+	* yubiauth/config.py, yubiauth/default_settings.py: added new
+	setting LDAP_YUBIKEY_ATTRIBUTE
+
 2014-02-21  Dain Nilsson <dain@yubico.com>
 
 	* NEWS: Updated NEWS for release.
