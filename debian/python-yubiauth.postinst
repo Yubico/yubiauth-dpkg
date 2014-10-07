@@ -7,76 +7,77 @@ set -e
 
 dbc_go python-yubiauth $@
 
+if [ "$1" = "configure" ]; then
+  # Insert database configuration into conf file.
+  . /etc/dbconfig-common/python-yubiauth.conf
 
-#Insert database configuration into conf file.
-. /etc/dbconfig-common/python-yubiauth.conf
+  if [ "$dbc_dbserver" = "" ]; then
+    dbc_dbserver="localhost"
+  fi
 
-if [ "$dbc_dbserver" = "" ]; then
-	dbc_dbserver="localhost"
-fi
+  if [ "$dbc_dbport" != "" ]; then
+    dbc_dbport=":$dbc_dbport"
+  fi
 
-if [ "$dbc_dbport" != "" ]; then
-	dbc_dbport=":$dbc_dbport"
-fi
+  if [ "$dbc_dbtype" = "pgsql" ]; then
+    dbc_dbtype="postgresql"
+  fi
 
-if [ "$dbc_dbtype" = "pgsql" ]; then
-	dbc_dbtype="postgresql"
-fi
+  CONF_FILE="/etc/yubico/auth/yubiauth.conf"
+  CONF_STRING="$dbc_dbtype://$dbc_dbuser:$dbc_dbpass@$dbc_dbserver$dbc_dbport/$dbc_dbname"
 
-CONF_FILE="/etc/yubico/auth/yubiauth.conf"
-CONF_STRING="$dbc_dbtype://$dbc_dbuser:$dbc_dbpass@$dbc_dbserver$dbc_dbport/$dbc_dbname"
+  if ! `grep -q "^DATABASE_CONFIGURATION.*'$CONF_STRING'.*$" $CONF_FILE`; then
+    # Comment out any existing configuration
+    sed -i 's/^DATABASE_CONFIGURATION/#DATABASE_CONFIGURATION/g' $CONF_FILE
 
-if ! `grep -q "^DATABASE_CONFIGURATION.*'$CONF_STRING'.*$" $CONF_FILE`; then
-	#Comment out any existing configuration
-	sed -i 's/^DATABASE_CONFIGURATION/#DATABASE_CONFIGURATION/g' $CONF_FILE
+    # Write new configuration
+    { echo ""; echo "#dbconfig-common generated connection string:"; \
+    echo "DATABASE_CONFIGURATION = '$CONF_STRING'"; } >> $CONF_FILE
+  fi
 
-	#Write new configuration
-	{ echo ""; echo "#dbconfig-common generated connection string:"; \
-	echo "DATABASE_CONFIGURATION = '$CONF_STRING'"; } >> $CONF_FILE
-fi
+  # Create the DB tables
+  python -c "from yubiauth import create_tables; create_tables()" || true
 
-#Create the DB tables
-python -c "from yubiauth import create_tables; create_tables()" || true
+  # Create empty log file, for sake of permissions
+  LOG_FILE="/var/log/yubiauth.log"
+  touch $LOG_FILE
 
-#Create empty log file, for sake of permissions
-LOG_FILE="/var/log/yubiauth.log"
-touch $LOG_FILE
+  # Fix permissions
+  chmod 0600 $CONF_FILE $LOG_FILE
 
-#Fix permissions
-chmod 0600 $CONF_FILE $LOG_FILE
+  # Apache configuration
+  CONF="yubiauth"
 
-#Apache configuration
-CONF="yubiauth"
+  if [ -d /etc/apache2 ]; then
+    # Alter permissions for apache
+    chown root:www-data $CONF_FILE $LOG_FILE
+    chmod g+r $CONF_FILE
+    chmod g+rw $LOG_FILE
 
-if [ -d /etc/apache2 ]; then
-	#Alter permissions for apache
-	chown root:www-data $CONF_FILE $LOG_FILE
-	chmod g+r $CONF_FILE
-	chmod g+rw $LOG_FILE
+    # Symlink apache configuration
+    if [ ! -e /etc/apache2/conf-available/$CONF.conf ]; then
+      mkdir -p /etc/apache2/conf-available
+      ln -s ../../yubico/auth/apache.conf /etc/apache2/conf-available/$CONF.conf
+    fi
+  fi
 
-	#Symlink apache configuration
-	if [ ! -e /etc/apache2/conf-available/$CONF.conf ]; then
-		mkdir -p /etc/apache2/conf-available
-		ln -s ../../yubico/auth/apache.conf /etc/apache2/conf-available/$CONF.conf
-	fi
-fi
+  COMMON_STATE=$(dpkg-query -f '${Status}' -W 'apache2.2-common' 2>/dev/null | awk '{print $3}' || true)
+  if [ -e /usr/share/apache2/apache2-maintscript-helper ] ; then
+    . /usr/share/apache2/apache2-maintscript-helper
+    apache2_invoke enconf $CONF || exit $?
+  elif [ "$COMMON_STATE" = "installed" ] || [ "$COMMON_STATE" = "unpacked" ] ; then
+    if [ -d /etc/apache2/conf.d/ -a ! -L /etc/apache2/conf.d/$CONF.conf ]; then
+      ln -s ../../yubico/auth/apache.conf /etc/apache2/conf.d/$CONF.conf
+    fi
+  fi
 
-COMMON_STATE=$(dpkg-query -f '${Status}' -W 'apache2.2-common' 2>/dev/null | awk '{print $3}' || true)
-if [ -e /usr/share/apache2/apache2-maintscript-helper ] ; then
-	. /usr/share/apache2/apache2-maintscript-helper
-	apache2_invoke enconf $CONF || exit $?
-elif [ "$COMMON_STATE" = "installed" ] || [ "$COMMON_STATE" = "unpacked" ] ; then
-	if [ -d /etc/apache2/conf.d/ -a ! -L /etc/apache2/conf.d/$CONF.conf ]; then
-		ln -s ../../yubico/auth/apache.conf /etc/apache2/conf.d/$CONF.conf
-	fi
-fi
-
-if [ -f /etc/init.d/apache2 ] ; then
-	if [ -x /usr/sbin/invoke-rc.d ]; then
-		invoke-rc.d apache2 reload 3>/dev/null || true
-	else
-		/etc/init.d/apache2 reload 3>/dev/null || true
-	fi
+  if [ -f /etc/init.d/apache2 ] ; then
+    if [ -x /usr/sbin/invoke-rc.d ]; then
+      invoke-rc.d apache2 reload 3>/dev/null || true
+    else
+      /etc/init.d/apache2 reload 3>/dev/null || true
+    fi
+  fi
 fi
 
 #DEBHELPER#
