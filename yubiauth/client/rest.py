@@ -111,6 +111,18 @@ def require_session(func=None, **kwargs):
     return inner(func) if func else inner
 
 
+def get_session_cookie(request):
+    log.info('beaker.session: %r', request.environ['beaker.session']._headers)
+    headers = request.environ['beaker.session']._headers
+    if SESSION_COOKIE in (headers.get('cookie_set') or ''):
+        cookie = headers['cookie_set']
+    elif SESSION_COOKIE in (headers.get('cookie') or ''):
+        cookie = headers['cookie']
+    else:
+        return None
+    return cookie.split('=', 1)[1].split(';', 1)[0]
+
+
 class ClientAPI(REST_API):
     __routes__ = [
         Route(r'^/login$', 'login'),
@@ -142,7 +154,7 @@ class ClientAPI(REST_API):
             session = client.create_session(username, password, otp)
             request.environ['beaker.session'].update(session)
             session.delete()
-            return json_response(True)
+            return json_response({'session': get_session_cookie(request)})
         except:
             log.info('Login failed for username=%s', username)
             log.debug('Login failure:', exc_info=True)
@@ -158,8 +170,8 @@ class ClientAPI(REST_API):
         return json_response(request.environ['beaker.session']._session())
 
     @require_session
-    @extract_params('oldpass', 'newpass', 'otp?')
-    def change_password(self, request, oldpass, newpass, otp=None):
+    @extract_params('newpass', 'oldpass?', 'otp?')
+    def change_password(self, request, newpass, oldpass=None, otp=None):
         client = request.environ['yubiauth.client']
         user = request.environ['yubiauth.user']
         try:
