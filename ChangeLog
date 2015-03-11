@@ -1,3 +1,45 @@
+2015-03-11  Dain Nilsson <dain@yubico.com>
+
+	* test/test_client_api.py, yubiauth/client/rest.py: Fixed failing
+	test.
+
+2015-03-11  Dain Nilsson <dain@yubico.com>
+
+	* yubiauth/__init__.py: Bumped version for release.
+
+2015-03-11  Dain Nilsson <dain@yubico.com>
+
+	* NEWS: Updated NEWS for release.
+
+2015-03-11  Dain Nilsson <dain@yubico.com>
+
+	* NEWS, doc/REST_API.adoc, yubiauth/client/rest.py,
+	yubiauth/client/templates/base.html,
+	yubiauth/client/templates/layout.html, yubiauth/util/utils.py: 
+	Updated REST API documentation.
+
+2015-03-11  Dain Nilsson <dain@yubico.com>
+
+	* yubiauth/core/model.py: Fix LDAP validation to allow user specific
+	BIND DN.
+
+2015-03-06  Dain Nilsson <dain@yubico.com>
+
+	* yubiauth/core/ldapauth.py: Minor cleanups.
+
+2014-10-30  Dain Nilsson <dain@yubico.com>
+
+	* doc/REST_API.adoc: Fixed anchors.
+
+2014-10-30  Dain Nilsson <dain@yubico.com>
+
+	* .gitmodules, README, README.adoc, doc, doc/LDAP_Setup.adoc,
+	doc/REST_API.adoc, doc/YubiHSM_Setup.adoc: Convert wiki to asciidoc.
+
+2014-09-11  Dain Nilsson <dain@yubico.com>
+
+	* yubiauth/util/controller.py: Catch missed exception.
+
 2014-08-02  Dain Nilsson <dain@yubico.com>
 
 	* NEWS, yubiauth/__init__.py: Updated NEWS for release.
